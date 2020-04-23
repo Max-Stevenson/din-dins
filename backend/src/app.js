@@ -1,8 +1,11 @@
 require("dotenv").config();
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const express = require("express");
+const port = process.env.PORT || 3000;
+
 const app = express();
-const port = 3000;
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
@@ -11,7 +14,7 @@ mongoose
     `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@dindins-cluster-rxgr4.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(process.env.PORT || 5000, () => {
+    app.listen(port, () => {
       console.log(`Server is up on port:${port}`);
     });
   })
