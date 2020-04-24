@@ -8,11 +8,20 @@ const mongoose = require("mongoose");
 const express = require("express");
 const port = process.env.PORT || 3000;
 
+const multer = require('multer');
+const fileUpload = require('./middleware/file-upload');
+
+
+
 const app = express();
 // body parser to read json form data and store as js object
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
+
+app.post('/image/upload', fileUpload.single(`image`), (req, res) => {
+  res.send();
+});
 
 mongoose
   .connect(

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const recipieSchema = new Schema({
-  image: { type: Buffer},
+  // image: { data: Buffer, content: String},
   title: { type: String, required: true },
   
 
