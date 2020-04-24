@@ -1,17 +1,26 @@
 require("dotenv").config();
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
+
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const express = require("express");
 const port = process.env.PORT || 3000;
 
 const app = express();
+// body parser to read json form data and store as js object
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
 mongoose
   .connect(
-    `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@dindins-cluster-rxgr4.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@dindins-cluster-rxgr4.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true
+    }
   )
   .then(() => {
     app.listen(port, () => {
