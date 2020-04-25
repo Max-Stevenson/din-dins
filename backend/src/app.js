@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const port = process.env.PORT || 3000;
 
+const recipiesRoutes = require('./routes/recipie-routes');
+
 const multer = require('multer');
 const fileUpload = require('./middleware/file-upload');
 
@@ -19,9 +21,7 @@ app.use(bodyParser.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.post('/image/upload', fileUpload.single(`image`), (req, res) => {
-  res.send();
-});
+app.use("/api/v1/recipies", recipiesRoutes);
 
 mongoose
   .connect(
