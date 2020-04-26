@@ -10,18 +10,24 @@ const port = process.env.PORT || 3000;
 
 const recipiesRoutes = require('./routes/recipie-routes');
 
-const multer = require('multer');
-const fileUpload = require('./middleware/file-upload');
-
-
-
 const app = express();
 // body parser to read json form data and store as js object
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("Hello World!"));
-
 app.use("/api/v1/recipies", recipiesRoutes);
+app.use((error, req, res, next) => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
+  if (res.headerSent) {
+    return next(error);
+  }
+
+  res.status(typeof error.code === 'number' ? error.code : 500);
+  res.json({ message: error.message || "An unknown error occurred" });
+});
 
 mongoose
   .connect(
