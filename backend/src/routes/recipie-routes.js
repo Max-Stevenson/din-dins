@@ -5,6 +5,8 @@ const { check } = require("express-validator");
 
 const router = express.Router();
 
+router.get("/", recipesController.getAllRecipies);
+
 router.post(
   "/",
   fileUpload.single("image"),
@@ -18,5 +20,7 @@ router.post(
   ],
   recipesController.createRecipie
 );
+
+
 
 module.exports = router;

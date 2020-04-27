@@ -1,5 +1,5 @@
 const Recipie = require("../models/recipie");
-const HttpError = require('../models/http-error');
+const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 
 exports.createRecipie = async (req, res, next) => {
@@ -18,4 +18,15 @@ exports.createRecipie = async (req, res, next) => {
     res.status(500).send(err);
   }
   res.status(201).send({ recipie });
+};
+
+exports.getAllRecipies = async (req, res, next) => {
+  let recipies;
+  try {
+    recipies = await Recipie.find();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+  res.status(200).send({ recipies });
 };
