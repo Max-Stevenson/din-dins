@@ -23,4 +23,8 @@ router.post(
   recipesController.createRecipie
 );
 
+router.patch("/:id", recipesController.editRecipie);
+
+router.delete("/:id", recipesController.deleteRecipie);
+
 module.exports = router;
