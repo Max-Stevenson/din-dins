@@ -5,6 +5,8 @@ const { check } = require("express-validator");
 
 const router = express.Router();
 
+router.get("/:id", recipesController.getSingleRecipie);
+
 router.get("/", recipesController.getAllRecipies);
 
 router.post(
@@ -20,7 +22,5 @@ router.post(
   ],
   recipesController.createRecipie
 );
-
-
 
 module.exports = router;

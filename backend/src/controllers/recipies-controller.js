@@ -30,3 +30,16 @@ exports.getAllRecipies = async (req, res, next) => {
   }
   res.status(200).send({ recipies });
 };
+
+exports.getSingleRecipie = async (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
+  let recipie;
+  try {
+    recipie = await Recipie.findById(id);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+  res.status(200).send(recipie);
+};
