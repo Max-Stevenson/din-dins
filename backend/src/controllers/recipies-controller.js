@@ -40,10 +40,11 @@ exports.getSingleRecipie = async (req, res, next) => {
 
   try {
     recipie = await Recipie.findById(id);
+    if (!recipie) {
+      return next(new HttpError("Recipie does not exist, please try again.", 404));
+    }
   } catch (err) {
-    return next(
-      new HttpError("Could not get recipie, please try again.", 500)
-    );
+    return next(new HttpError("Could not get recipie, please try again.", 500));
   }
   res.status(200).send(recipie);
 };
@@ -56,15 +57,27 @@ exports.editRecipie = async (req, res, next) => {
     );
   }
 
-  const { image, title, isVegetarian, mealSize, ingredients, method } = req.body;
+  const {
+    image,
+    title,
+    isVegetarian,
+    mealSize,
+    ingredients,
+    method
+  } = req.body;
   const id = req.params.id;
 
   let recipie;
   try {
     recipie = await Recipie.findById(id);
+    if (!recipie) {
+      return next(
+        new HttpError("Could not find recipie to edit, please try again.", 404)
+      );
+    }
   } catch (err) {
     console.log(err);
-    
+
     return next(
       new HttpError("Could not edit recipie, please try again.", 500)
     );
@@ -80,8 +93,6 @@ exports.editRecipie = async (req, res, next) => {
   try {
     await recipie.save();
   } catch (err) {
-    console.log(err);
-
     return next(
       new HttpError("Could not edit recipie, please try again.", 500)
     );
@@ -90,4 +101,22 @@ exports.editRecipie = async (req, res, next) => {
   res.status(200).send(recipie);
 };
 
-exports.deleteRecipie = async (req, res, next) => {};
+exports.deleteRecipie = async (req, res, next) => {
+  let recipie;
+  const id = req.params.id;
+  try {
+    recipie = await Recipie.findByIdAndDelete(id);
+    if (!recipie) {
+      return next(
+        new HttpError(
+          "Could not find recipie to delete, please try again.", 404)
+      );
+    }
+  } catch (err) {
+    return next(
+      new HttpError("Could not delete recipie, please try again.", 500)
+    );
+  }
+
+  res.status(200).send(recipie)
+};
