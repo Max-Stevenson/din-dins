@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Header from "./shared/components/Header";
-import Users from "./users/pages/Users";
+import Profile from "./profile/pages/UserProfile";
 import Recipies from "./recipies/pages/Recipies";
 import "./App.css";
 
@@ -17,7 +17,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route path="/profile" exact={true}>
-          <Users />
+          <Profile />
         </Route>
         <Route path="/recipies" exact={true}>
           <Recipies />
