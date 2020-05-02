@@ -8,14 +8,14 @@ const mongoose = require("mongoose");
 const express = require("express");
 const port = process.env.PORT || 3000;
 
-const recipiesRoutes = require("./routes/recipie-routes");
+const recipesRoutes = require("./routes/recipe-routes");
 const userRoutes = require("./routes/user-routes");
 
 const app = express();
 // body parser to read json form data and store as js object
 app.use(bodyParser.json());
 
-app.use("/api/v1/recipies", recipiesRoutes);
+app.use("/api/v1/recipes", recipesRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use((error, req, res, next) => {
   if (req.file) {

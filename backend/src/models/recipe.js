@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const recipieSchema = new Schema({
+const recipeSchema = new Schema({
   image: { data: Buffer, content: String },
   title: { type: String, trim: true, required: true },
   isVegetarian: { type: Boolean, required: true },
@@ -11,4 +11,4 @@ const recipieSchema = new Schema({
   method: { type: [String], required: true }
 });
 
-module.exports = mongoose.model("Recipie", recipieSchema);
+module.exports = mongoose.model("Recipe", recipeSchema);

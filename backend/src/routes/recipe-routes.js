@@ -1,13 +1,13 @@
 const express = require("express");
 const fileUpload = require("../middleware/file-upload");
-const recipesController = require('../controllers/recipies-controller');
+const recipesController = require('../controllers/recipes-controller');
 const { check } = require("express-validator");
 
 const router = express.Router();
 
-router.get("/:id", recipesController.getSingleRecipie);
+router.get("/:id", recipesController.getSingleRecipe);
 
-router.get("/", recipesController.getAllRecipies);
+router.get("/", recipesController.getAllRecipes);
 
 router.post(
   "/",
@@ -20,11 +20,11 @@ router.post(
       .not()
       .isEmpty()
   ],
-  recipesController.createRecipie
+  recipesController.createRecipe
 );
 
-router.patch("/:id", recipesController.editRecipie);
+router.patch("/:id", recipesController.editRecipe);
 
-router.delete("/:id", recipesController.deleteRecipie);
+router.delete("/:id", recipesController.deleteRecipe);
 
 module.exports = router;
