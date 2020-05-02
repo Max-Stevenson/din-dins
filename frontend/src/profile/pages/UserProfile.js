@@ -1,7 +1,12 @@
-import React from 'react';
+import React from "react";
+import UserProfileItem from "../components/UserProfileItem";
 
 const UserProfile = () => {
-  return <h2>Profile Page</h2>
+  return (
+    <div>
+      <UserProfileItem name="Test" />
+    </div>
+  );
 };
 
 export default UserProfile;
