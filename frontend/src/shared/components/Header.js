@@ -12,13 +12,13 @@ const Header = props => {
       <h1>Din Dins</h1>
       <ul className="navbar-links">
         <li>
-          <a href="default.asp">Recipies</a>
+          <a href="/recipes">Recipes</a>
         </li>
         <li>
-          <a href="news.asp">Mealplanner</a>
+          <a href="/mealplanner">Mealplanner</a>
         </li>
         <li>
-          <a href="contact.asp">Profile</a>
+          <a href="/profile">Profile</a>
         </li>
       </ul>
     </header>

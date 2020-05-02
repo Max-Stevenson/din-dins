@@ -8,7 +8,7 @@ import {
 
 import Header from "./shared/components/Header";
 import Profile from "./profile/pages/UserProfile";
-import Recipies from "./recipies/pages/Recipies";
+import Recipes from "./recipes/pages/Recipes";
 import "./App.css";
 
 const App = () => {
@@ -19,8 +19,8 @@ const App = () => {
         <Route path="/profile" exact={true}>
           <Profile />
         </Route>
-        <Route path="/recipies" exact={true}>
-          <Recipies />
+        <Route path="/recipes" exact={true}>
+          <Recipes />
         </Route>
         <Redirect to="/" />
       </Switch>

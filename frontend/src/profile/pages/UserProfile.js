@@ -1,4 +1,5 @@
 import React from "react";
+import "./UserProfile.css";
 import UserProfileItem from "../components/UserProfileItem";
 
 const UserProfile = () => {
