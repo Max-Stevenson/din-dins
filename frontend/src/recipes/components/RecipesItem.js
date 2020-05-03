@@ -1,23 +1,40 @@
 import React from "react";
+import { FaLeaf, FaDrumstickBite, FaUtensils } from "react-icons/fa";
 import "./RecipesItem.css";
+import Card from "../../shared/components/Card";
 
 const RecipesItem = props => {
   return (
     <li className="recipe-item">
-      <div className="recipe-item__content">
-      <div className="recipe-item__header">
-        <h2>{props.name}</h2>
-      </div>
-        <div className="recipe-item__image">
-          <img src={props.image} alt={props.name}/>
+      <Card className="recipe-item__content">
+        <div className="recipe-item__header">
+          <h2>{props.title}</h2>
         </div>
-        <div className="recipe-item__details">
-          <div className="recipe-item__meal-info">
-            <span>{props.isVegetarian}</span>
-            <span>{props.mealSize}</span>
+        <div className="recipe-item__image">
+          <img src={props.image} alt={props.title} />
+        </div>
+        <div className="recipe-item__meal-info">
+          <div className="recipe-item__info-container">
+            {props.isVegetarian === true ? (
+              <span className="recipe-item__logo-container">
+                <FaLeaf className="recipe-item__logo" />
+                Vegetarian
+              </span>
+            ) : (
+              <span className="recipe-item__logo-container">
+                <FaDrumstickBite className="recipe-item__logo"/>
+                Meat
+              </span>
+            )}
+          </div>
+          <div>
+            <span className="recipe-item__logo-container">
+              <FaUtensils className="recipe-item__logo" />
+              {props.mealSize}
+            </span>
           </div>
         </div>
-      </div>
+      </Card>
     </li>
   );
 };

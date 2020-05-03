@@ -1,0 +1,31 @@
+.recipe-item__image {
+
+}
+
+.recipe-item__header {
+  text-align: center;
+}
+
+.recipe-item__image img {
+  max-width: 100%;
+}
+
+.recipe-item__meal-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recipe-item__logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.recipe-item_info-container {
+  padding: 10px;
+}
+
+.recipe-item__logo {
+  width: 32px;
+  height: 32px;
+}
