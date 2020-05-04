@@ -1,7 +1,7 @@
 import React from "react";
 import { FaLeaf, FaDrumstickBite, FaUtensils } from "react-icons/fa";
 import "./RecipesItem.css";
-import Card from "../../shared/components/Card";
+import Card from "../../shared/components/UIElements/Card";
 
 const RecipesItem = props => {
   return (

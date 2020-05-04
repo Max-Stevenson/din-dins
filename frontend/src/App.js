@@ -6,7 +6,7 @@ import {
   Switch
 } from "react-router-dom";
 
-import Header from "./shared/components/Header";
+import Header from "./shared/components/Navigation/Header";
 import Profile from "./profile/pages/UserProfile";
 import Recipes from "./recipes/pages/Recipes";
 import "./App.css";

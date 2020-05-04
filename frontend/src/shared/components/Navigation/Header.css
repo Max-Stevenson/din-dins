@@ -4,24 +4,24 @@
   color: rgb(255, 255, 255);
 }
 
-.navbar-links {
+.main-header__nav-links {
   list-style: none;
   display: flex;
   align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
-  .navbar-links {
+  .main_header__nav-links {
     display: none;
   }
 
-  .sidebar-icon-container {
+  .main-header__menu-btn {
     align-self: center;
     margin-right: 10px;
     margin-left: 5px;
   }
   
-  .sidebar-icon-container div {
+  .main-header__menu-btn div {
     width: 35px;
     height: 5px;
     background-color: rgb(255, 255, 255);
