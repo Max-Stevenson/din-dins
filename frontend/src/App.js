@@ -15,15 +15,17 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Route path="/profile" exact={true}>
-          <Profile />
-        </Route>
-        <Route path="/recipes" exact={true}>
-          <Recipes />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
+      <main>
+        <Switch>
+          <Route path="/profile" exact={true}>
+            <Profile />
+          </Route>
+          <Route path="/recipes" exact={true}>
+            <Recipes />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </main>
     </Router>
   );
 };
