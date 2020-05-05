@@ -1,5 +1,6 @@
 .main-header {
   display: flex;
+  justify-content: space-between;
   background-color: rgb(46, 74, 98);
   color: rgb(255, 255, 255);
 }
@@ -10,12 +11,21 @@
   align-items: center;
 }
 
+.main-header__menu-btn {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
+  .main-header {
+    justify-content: flex-start;
+  }
+
   .main_header__nav-links {
     display: none;
   }
 
   .main-header__menu-btn {
+    display: block;
     align-self: center;
     margin-right: 10px;
     margin-left: 5px;
