@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import NavLinks from "./NavLinks";
+import Backdrop from "../UIElements/Backdrop";
 import SideDrawer from "./SideDrawer";
 
 const Header = props => {
@@ -11,13 +12,20 @@ const Header = props => {
     setDrawerIsOpen(true);
   };
 
+  const closeDrawer = () => {
+    setDrawerIsOpen(false);
+  };
+
   return (
     <React.Fragment>
-      {drawerIsOpen && (<SideDrawer>
-        <nav className="main-header__drawer-nav">
-          <NavLinks />
-        </nav>
-      </SideDrawer>)}
+      {drawerIsOpen && <Backdrop  onClick={closeDrawer}/>}
+      {drawerIsOpen && (
+        <SideDrawer>
+          <nav className="main-header__drawer-nav">
+            <NavLinks />
+          </nav>
+        </SideDrawer>
+      )}
       <header className="main-header">
         <button className="main-header__menu-btn" onClick={openDrawer}>
           <div />
