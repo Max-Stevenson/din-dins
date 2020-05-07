@@ -10,9 +10,9 @@
 }
 
 .modal__header {
-  width: 100%;
+  /* width: 100%; */
   padding: 1rem 0.5rem;
-  background: #2a006e;
+  background: #2e4a62;
   color: white;
 }
 

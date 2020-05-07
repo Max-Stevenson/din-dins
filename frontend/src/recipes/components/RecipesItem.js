@@ -25,7 +25,11 @@ const RecipesItem = props => {
         contentClass="recipe-item__modal-content"
         footerClass="recipe-item__modal-actions"
         footer={<Button onClick={cancelDeleteHandler}>Cancel</Button>}
-      />
+      >
+        <div className="recipe-item__delete-confirmation">
+          <p>Are you sure you want to delete this recipe?</p>
+        </div>
+      </Modal>
       <li className="recipe-item">
         <Card className="recipe-item__content">
           <div className="recipe-item__header">

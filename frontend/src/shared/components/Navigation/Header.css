@@ -1,8 +1,8 @@
 .main-header {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(46, 74, 98);
-  color: rgb(255, 255, 255);
+  background-color: #2e4a62;
+  color: white;
 }
 
 .main-header__title a {
