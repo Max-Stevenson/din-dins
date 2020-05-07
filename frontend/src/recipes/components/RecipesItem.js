@@ -2,6 +2,7 @@ import React from "react";
 import { FaLeaf, FaDrumstickBite, FaUtensils } from "react-icons/fa";
 import "./RecipesItem.css";
 import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
 
 const RecipesItem = props => {
   return (
@@ -35,8 +36,8 @@ const RecipesItem = props => {
           </div>
         </div>
         <div className="recipe-item__actions">
-          <button>Edit Recipe</button>
-          <button>Delete Recipe</button>
+          <Button to={`/recipes/${props.id}`}>Edit Recipe</Button>
+          <Button>Delete Recipe</Button>
         </div>
       </Card>
     </li>

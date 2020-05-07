@@ -31,7 +31,7 @@ const Header = props => {
           <div />
         </button>
         <h1 className="main-header__title">
-          <Link to="/" exact>
+          <Link to="/" exact="true">
             Din Dins
           </Link>
         </h1>

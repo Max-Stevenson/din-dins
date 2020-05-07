@@ -19,6 +19,7 @@ const RecipesList = props => {
       {props.items.map(recipe => (
         <RecipesItem
           key={recipe.id}
+          id={recipe.id}
           title={recipe.title}
           isVegeterian={recipe.isVegeterian}
           mealSize={recipe.mealSize}

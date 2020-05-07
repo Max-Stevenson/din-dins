@@ -5,6 +5,11 @@
   color: rgb(255, 255, 255);
 }
 
+.main-header__title a {
+  text-decoration: none;
+  color: white;
+}
+
 .main-header__nav-links {
   list-style: none;
   display: flex;

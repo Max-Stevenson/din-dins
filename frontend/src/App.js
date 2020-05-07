@@ -25,11 +25,11 @@ const App = () => {
           <Route path="/recipes" exact={true}>
             <Recipes />
           </Route>
-          <Route path="/recipes/:recipeId" exact={true}>
-            <Recipe />
-          </Route>
           <Route path="/recipes/new" exact={true}>
             <NewRecipe />
+          </Route>
+          <Route path="/recipes/:recipeId" exact={true}>
+            <Recipe />
           </Route>
           <Redirect to="/" />
         </Switch>
