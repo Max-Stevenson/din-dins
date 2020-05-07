@@ -1,6 +1,7 @@
 import React from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import "./UserProfileItem.css";
+import Button from "../../shared/components/FormElements/Button";
 
 const UserProfileItem = props => {
   return (
@@ -27,8 +28,10 @@ const UserProfileItem = props => {
             required={true}
           />
         </div>
-        <a className="form-btn" href="/">Cancel</a>
-        <input className="form-btn" type="submit" value="Update" />
+        <Button to="/">Cancel</Button>
+        <Button type="submit" value="update">
+          Update
+        </Button>
       </form>
     </div>
   );
