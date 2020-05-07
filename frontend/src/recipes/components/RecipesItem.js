@@ -22,17 +22,21 @@ const RecipesItem = props => {
               </span>
             ) : (
               <span className="recipe-item__logo-container">
-                <FaDrumstickBite className="recipe-item__logo"/>
+                <FaDrumstickBite className="recipe-item__logo" />
                 Meat
               </span>
             )}
           </div>
-          <div>
+          <div className="recipe-item__info-container">
             <span className="recipe-item__logo-container">
               <FaUtensils className="recipe-item__logo" />
               {props.mealSize}
             </span>
           </div>
+        </div>
+        <div className="recipe-item__actions">
+          <button>Edit Recipe</button>
+          <button>Delete Recipe</button>
         </div>
       </Card>
     </li>

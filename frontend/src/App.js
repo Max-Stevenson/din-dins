@@ -9,6 +9,8 @@ import {
 import Header from "./shared/components/Navigation/Header";
 import Profile from "./profile/pages/UserProfile";
 import Recipes from "./recipes/pages/Recipes";
+import Recipe from "./recipes/pages/Recipe";
+import NewRecipe from "./recipes/pages/NewRecipe";
 import "./App.css";
 
 const App = () => {
@@ -22,6 +24,12 @@ const App = () => {
           </Route>
           <Route path="/recipes" exact={true}>
             <Recipes />
+          </Route>
+          <Route path="/recipes/:recipeId" exact={true}>
+            <Recipe />
+          </Route>
+          <Route path="/recipes/new" exact={true}>
+            <NewRecipe />
           </Route>
           <Redirect to="/" />
         </Switch>

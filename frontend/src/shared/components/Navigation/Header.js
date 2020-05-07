@@ -8,24 +8,24 @@ import SideDrawer from "./SideDrawer";
 const Header = props => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
-  const openDrawer = () => {
+  const openDrawerHandler = () => {
     setDrawerIsOpen(true);
   };
 
-  const closeDrawer = () => {
+  const closeDrawerHandler = () => {
     setDrawerIsOpen(false);
   };
 
   return (
     <React.Fragment>
-      {drawerIsOpen && <Backdrop onClick={closeDrawer} />}
-      <SideDrawer show={drawerIsOpen}>
+      {drawerIsOpen && <Backdrop onClick={closeDrawerHandler} />}
+      <SideDrawer show={drawerIsOpen} onClick={closeDrawerHandler}>
         <nav className="main-header__drawer-nav">
           <NavLinks />
         </nav>
       </SideDrawer>
       <header className="main-header">
-        <button className="main-header__menu-btn" onClick={openDrawer}>
+        <button className="main-header__menu-btn" onClick={openDrawerHandler}>
           <div />
           <div />
           <div />
