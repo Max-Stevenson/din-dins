@@ -1,9 +1,6 @@
-.recipe-item__image {
-
-}
-
 .recipe-item__header {
   text-align: center;
+  margin: 0 0 5px 0;
 }
 
 .recipe-item__image img {
@@ -28,4 +25,10 @@
 .recipe-item__logo {
   width: 32px;
   height: 32px;
+}
+
+.recipe-item__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
