@@ -18,14 +18,12 @@ const Header = props => {
 
   return (
     <React.Fragment>
-      {drawerIsOpen && <Backdrop  onClick={closeDrawer}/>}
-      {drawerIsOpen && (
-        <SideDrawer>
-          <nav className="main-header__drawer-nav">
-            <NavLinks />
-          </nav>
-        </SideDrawer>
-      )}
+      {drawerIsOpen && <Backdrop onClick={closeDrawer} />}
+      <SideDrawer show={drawerIsOpen}>
+        <nav className="main-header__drawer-nav">
+          <NavLinks />
+        </nav>
+      </SideDrawer>
       <header className="main-header">
         <button className="main-header__menu-btn" onClick={openDrawer}>
           <div />
