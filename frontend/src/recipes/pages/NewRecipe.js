@@ -1,6 +1,7 @@
 import React from "react";
 import Input from "../../shared/components/FormElements/Input";
 import "./NewRecipe.css";
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 
 const NewRecipe = () => {
   return (
@@ -11,7 +12,7 @@ const NewRecipe = () => {
           element="input"
           type="text"
           label="Title"
-          validators={[]}
+          validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter valid recipe title."
         />
       </form>

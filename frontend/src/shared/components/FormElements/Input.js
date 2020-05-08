@@ -8,7 +8,7 @@ const inputReducer = (state, action) => {
       return {
         ...state,
         value: action.val,
-        isValid: true
+        isValid: validate(action.val, action.validators)
       };
     case "TOUCH":
       return {
@@ -28,7 +28,8 @@ const Input = props => {
   const changeHandler = event => {
     dispatch({
       type: "CHANGE",
-      val: event.target.value
+      val: event.target.value,
+      validators: props.validators
     });
   };
 
@@ -55,7 +56,6 @@ const Input = props => {
   return (
     <div
       className={`form-control ${!inputState.isValid &&
-        inputState.isTouched &&
         "form-control--invalid"}`}
     >
       <label htmlFor={props.id}>{props.label}</label>
