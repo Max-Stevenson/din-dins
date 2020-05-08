@@ -25,12 +25,17 @@ const Input = props => {
     value: "",
     isValid: false
   });
+  
   const changeHandler = event => {
     dispatch({
       type: "CHANGE",
       val: event.target.value,
       validators: props.validators
     });
+  };
+
+  const touchHandler = () => {
+    dispatch({ type: "TOUCH" });
   };
 
   const element =
@@ -40,7 +45,7 @@ const Input = props => {
         type={props.type}
         placeholder={props.placeholder}
         onChange={changeHandler}
-        // onBlur={touchHandler}
+        onBlur={touchHandler}
         value={inputState.value}
       />
     ) : (
@@ -48,7 +53,7 @@ const Input = props => {
         id={props.id}
         rows={props.rows || 3}
         onChange={changeHandler}
-        // onBlur={touchHandler}
+        onBlur={touchHandler}
         value={inputState.value}
       />
     );
@@ -56,6 +61,7 @@ const Input = props => {
   return (
     <div
       className={`form-control ${!inputState.isValid &&
+        inputState.isTouched &&
         "form-control--invalid"}`}
     >
       <label htmlFor={props.id}>{props.label}</label>
