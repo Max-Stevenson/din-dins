@@ -8,6 +8,12 @@ const reducer = (state, action) => {
       return {
         ingredients: [...state.ingredients, { ingredient: action.ingredient }]
       };
+    case "REMOVE":
+      return {
+        ingredients: state.ingredients.filter(si => {
+          return si.ingredient.item !== action.i.ingredient.item;
+        })
+      };
     default:
       return state;
   }
@@ -15,13 +21,12 @@ const reducer = (state, action) => {
 
 const TestPage = () => {
   const [{ ingredients }, dispatch] = useReducer(reducer, { ingredients: [] });
-  const [quantity, setQuantity] = useState();
-  const [measure, setMeasure] = useState();
-  const [item, setItem] = useState();
+  const [quantity, setQuantity] = useState(0);
+  const [measure, setMeasure] = useState("");
+  const [item, setItem] = useState("");
 
   const handleAdd = e => {
     e.preventDefault();
-    console.log("working");
     dispatch({
       type: "ADD_ITEM",
       ingredient: { quantity, measure, item }
@@ -35,7 +40,21 @@ const TestPage = () => {
     <React.Fragment>
       <h2>Test Page</h2>
       <h2>Current Ingredients</h2>
-      <pre>{JSON.stringify(ingredients, null, 2)}</pre>
+      <ul>
+        {ingredients.map((i, idx) => (
+          <li key={idx}>
+            {i.ingredient.quantity} {i.ingredient.measure} {i.ingredient.item}
+            <button
+              onClick={e => {
+                e.preventDefault();
+                dispatch({ type: "REMOVE", i });
+              }}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
       <input
         type="number"
         id="ingredientQuantity"
