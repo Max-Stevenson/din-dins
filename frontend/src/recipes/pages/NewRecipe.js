@@ -60,10 +60,15 @@ const NewRecipe = () => {
     [dispatch]
   );
 
+  const recipeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  }
+
   return (
     <React.Fragment>
       <h2>New Recipe Page</h2>
-      <form className="recipe-form">
+      <form className="recipe-form" onSubmit={recipeSubmitHandler}>
         <Input
           element="input"
           id="title"
