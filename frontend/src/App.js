@@ -11,6 +11,7 @@ import Profile from "./profile/pages/UserProfile";
 import Recipes from "./recipes/pages/Recipes";
 import Recipe from "./recipes/pages/Recipe";
 import NewRecipe from "./recipes/pages/NewRecipe";
+import TestPage from "./TestPage";
 import "./App.css";
 
 const App = () => {
@@ -30,6 +31,9 @@ const App = () => {
           </Route>
           <Route path="/recipes/:recipeId" exact={true}>
             <Recipe />
+          </Route>
+          <Route path="/test" exact={true}>
+            <TestPage />
           </Route>
           <Redirect to="/" />
         </Switch>
