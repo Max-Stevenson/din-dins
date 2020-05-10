@@ -22,8 +22,9 @@ const inputReducer = (state, action) => {
 
 const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
-    isValid: false
+    value: props.value || "",
+    isTouched: false,
+    isValid: props.valid || false,
   });
 
   const { id, onInput } = props;
@@ -45,49 +46,25 @@ const Input = props => {
     dispatch({ type: "TOUCH" });
   };
 
-  let element;
-  switch (props.element) {
-    case "input":
-      element = (
-        <input
-          id={props.id}
-          name={props.name}
-          type={props.type}
-          placeholder={props.placeholder}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          value={inputState.value}
-        />
-      );
-      break;
-    case "textarea":
-      element = (
-        <textarea
-          id={props.id}
-          name={props.name}
-          rows={props.rows || 3}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          value={inputState.value}
-        />
-      );
-      break;
-    case "radio":
-      element = (
-        <input
-          id={props.id}
-          name={props.name}
-          type="radio"
-          placeholder={props.placeholder}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          value={props.value}
-        />
-      );
-      break;
-    default:
-      return;
-  }
+  const element =
+    props.element === "input" ? (
+      <input
+        id={props.id}
+        type={props.type}
+        placeholder={props.placeholder}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+      />
+    ) : (
+      <textarea
+        id={props.id}
+        rows={props.rows || 3}
+        onChange={changeHandler}
+        onBlur={touchHandler}
+        value={inputState.value}
+      />
+    );
 
   return (
     <div

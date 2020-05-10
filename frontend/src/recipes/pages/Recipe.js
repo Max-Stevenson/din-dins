@@ -4,6 +4,7 @@ import Tabs from "../../shared/components/UIElements/Tabs";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
+import "./Recipe.css";
 
 const testItems = [
   {
@@ -45,7 +46,7 @@ const Recipe = () => {
   return (
     <div>
       <h2>Recipe Page</h2>
-      <form>
+      <form className="recipe-form">
         <Input
           id="title"
           element="input"
@@ -57,8 +58,6 @@ const Recipe = () => {
           value={identifiedRecipe.title}
           valid={true}
         />
-        <h2>{identifiedRecipe.title}</h2>
-        <p>{identifiedRecipe.id}</p>
         <Tabs>
           <div label="Ingredients">
             <ul>
@@ -75,6 +74,7 @@ const Recipe = () => {
             </ul>
           </div>
         </Tabs>
+        <Button type="submit" disabled={true}>Update Recipe</Button>
       </form>
     </div>
   );

@@ -1,37 +1,13 @@
-import React, { useCallback, useReducer } from "react";
+import React from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import "./NewRecipe.css";
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from "../../shared/util/validators";
-
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (let inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid }
-        },
-        isValid: formIsValid
-      };
-
-    default:
-      return state;
-  }
-};
+import { useForm } from "../../shared/hooks/form-hook";
 
 const NewRecipe = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, inputHandler] = useForm(
+    {
       title: {
         value: "",
         isValid: false
@@ -45,25 +21,13 @@ const NewRecipe = () => {
         isValid: false
       }
     },
-    isValid: false
-  });
-
-  const inputHandler = useCallback(
-    (id, value, isValid) => {
-      dispatch({
-        type: "INPUT_CHANGE",
-        value: value,
-        isValid: isValid,
-        inputId: id
-      });
-    },
-    [dispatch]
+    false
   );
 
-  const recipeSubmitHandler = (event) => {
+  const recipeSubmitHandler = event => {
     event.preventDefault();
     console.log(formState.inputs);
-  }
+  };
 
   return (
     <React.Fragment>
@@ -89,7 +53,7 @@ const NewRecipe = () => {
         />
         <div className="recipe-form__meal-type">
           <Input
-            element="radio"
+            element="input"
             id="mealType"
             name="mealType"
             type="radio"
@@ -100,7 +64,7 @@ const NewRecipe = () => {
             value={true}
           />
           <Input
-            element="radio"
+            element="input"
             id="mealType"
             name="mealType"
             type="radio"
