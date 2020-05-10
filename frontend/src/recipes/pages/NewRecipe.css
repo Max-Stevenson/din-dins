@@ -9,3 +9,8 @@
   border-radius: 6px;
   background: white;
 }
+
+.recipe-form__meal-type {
+  display: flex;
+  justify-content: space-around;
+}

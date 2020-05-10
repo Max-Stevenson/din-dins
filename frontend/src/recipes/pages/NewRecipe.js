@@ -39,6 +39,10 @@ const NewRecipe = () => {
       mealSize: {
         value: "",
         isValid: false
+      },
+      mealType: {
+        value: "",
+        isValid: false
       }
     },
     isValid: false
@@ -80,25 +84,45 @@ const NewRecipe = () => {
         />
         <div className="recipe-form__meal-type">
           <Input
-            element="input"
-            id="veg"
+            element="radio"
+            id="mealType"
             name="mealType"
             type="radio"
             label="Vegetarian"
             validators={[]}
             errorText="Please select meal type."
             onInput={inputHandler}
+            value={true}
           />
           <Input
-            element="input"
-            id="nonVeg"
+            element="radio"
+            id="mealType"
             name="mealType"
             type="radio"
             label="Non-vegetarian"
             validators={[]}
             onInput={inputHandler}
+            value={false}
           />
         </div>
+        <Input
+          element="textarea"
+          id="ingredients"
+          name="ingredientsList"
+          label="Ingredients"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter ingreidents, separated by commas."
+          onInput={inputHandler}
+        />
+        <Input
+          element="textarea"
+          id="method"
+          name="methodList"
+          label="Cooking Method"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter cooking steps, separated by commas."
+          onInput={inputHandler}
+        />
         <Button type="submit" disabled={!formState.isValid}>
           Add Recipe
         </Button>

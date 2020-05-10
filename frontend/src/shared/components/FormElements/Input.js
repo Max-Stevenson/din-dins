@@ -31,6 +31,7 @@ const Input = props => {
 
   useEffect(() => {
     onInput(id, value, isValid);
+    console.log(value);
   }, [id, value, isValid, onInput]);
 
   const changeHandler = event => {
@@ -45,27 +46,49 @@ const Input = props => {
     dispatch({ type: "TOUCH" });
   };
 
-  const element =
-    props.element === "input" ? (
-      <input
-        id={props.id}
-        name={props.name}
-        type={props.type}
-        placeholder={props.placeholder}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
-    ) : (
-      <textarea
-        id={props.id}
-        name={props.name}
-        rows={props.rows || 3}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
-    );
+  let element;
+  switch (props.element) {
+    case "input":
+      element = (
+        <input
+          id={props.id}
+          name={props.name}
+          type={props.type}
+          placeholder={props.placeholder}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+        />
+      );
+      break;
+    case "textarea":
+      element = (
+        <textarea
+          id={props.id}
+          name={props.name}
+          rows={props.rows || 3}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+        />
+      );
+      break;
+    case "radio":
+      element = (
+        <input
+          id={props.id}
+          name={props.name}
+          type="radio"
+          placeholder={props.placeholder}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={props.value}
+        />
+      );
+      break;
+    default:
+      return;
+  }
 
   return (
     <div
