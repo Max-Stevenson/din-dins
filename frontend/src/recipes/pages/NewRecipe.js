@@ -9,13 +9,20 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_ITEM":
       return {
+        ...state,
         ingredients: [...state.ingredients, { ingredient: action.ingredient }]
       };
     case "REMOVE":
       return {
+        ...state,
         ingredients: state.ingredients.filter(si => {
           return si.ingredient.item !== action.i.ingredient.item;
         })
+      };
+    case "ADD_METHOD":
+      return {
+        ...state,
+        method: [...state.method, { step: action.methodStep }]
       };
     default:
       return state;
@@ -23,7 +30,11 @@ const reducer = (state, action) => {
 };
 
 const NewRecipe = () => {
-  const [{ ingredients }, dispatch] = useReducer(reducer, { ingredients: [] });
+  const [{ ingredients, method }, dispatch] = useReducer(reducer, {
+    ingredients: [],
+    method: []
+  });
+  const [methodStep, setMethodStep] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("");
   const [item, setItem] = useState("");
@@ -56,9 +67,18 @@ const NewRecipe = () => {
     setItem("");
   };
 
+  const handleAddMethod = e => {
+    e.preventDefault();
+    dispatch({
+      type: "ADD_METHOD",
+      methodStep
+    });
+    setMethodStep("");
+  };
+
   const recipeSubmitHandler = event => {
     event.preventDefault();
-    console.log({...formState.inputs, ingredients});
+    console.log({ ...formState.inputs, ingredients, method });
   };
 
   return (
@@ -109,20 +129,21 @@ const NewRecipe = () => {
         <div className="recipe-form__ingredients-list">
           <h2>Ingredients</h2>
           <ul>
-            {ingredients.map((i, idx) => (
-              <li key={idx}>
-                {i.ingredient.quantity} {i.ingredient.measure}{" "}
-                {i.ingredient.item}
-                <button
-                  onClick={e => {
-                    e.preventDefault();
-                    dispatch({ type: "REMOVE", i });
-                  }}
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
+            {ingredients.length > 0 &&
+              ingredients.map((i, idx) => (
+                <li key={idx}>
+                  {i.ingredient.quantity} {i.ingredient.measure}{" "}
+                  {i.ingredient.item}
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch({ type: "REMOVE", i });
+                    }}
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
           </ul>
           <label htmlFor="ingredientQuantity">Quantity</label>
           <input
@@ -148,6 +169,23 @@ const NewRecipe = () => {
             value={item}
           />
           <Button onClick={handleAdd}>Add Ingredient</Button>
+        </div>
+        <div className="recipe-form__method-list">
+          <h2>Method</h2>
+          <ol>
+            {method.map((m, idx) => (
+              <li key={idx}>{m.step}</li>
+            ))}
+          </ol>
+        </div>
+        <div className="recipe-form__method-input">
+          <input
+            type="text"
+            id="method"
+            onChange={e => setMethodStep(e.target.value)}
+            value={methodStep}
+          />
+          <Button onClick={handleAddMethod}>Add Method Step</Button>
         </div>
         <Button type="submit" disabled={!formState.isValid}>
           Add Recipe
