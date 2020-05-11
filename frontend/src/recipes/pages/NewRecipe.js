@@ -19,10 +19,19 @@ const NewRecipe = () => {
       mealType: {
         value: "",
         isValid: false
+      },
+      ingredients: {
+        value: ["chicken", "chips"],
+        isValid: false
       }
     },
     false
   );
+
+  const handleIngredientAdd = event => {
+    event.preventDefault();
+    
+  };
 
   const recipeSubmitHandler = event => {
     event.preventDefault();
@@ -74,24 +83,47 @@ const NewRecipe = () => {
             value={false}
           />
         </div>
-        <Input
-          element="textarea"
-          id="ingredients"
-          name="ingredientsList"
-          label="Ingredients"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter ingreidents, separated by commas."
-          onInput={inputHandler}
-        />
-        <Input
-          element="textarea"
-          id="method"
-          name="methodList"
-          label="Cooking Method"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter cooking steps, separated by commas."
-          onInput={inputHandler}
-        />
+        <div className="recipe-form__ingredients-list">
+          <h2>Ingredients</h2>
+          <ul>
+            {formState.inputs.ingredients.value.map(ing => (
+              <li>{ing}</li>
+            ))}
+          </ul>
+          <Input
+            element="input"
+            id="quantity"
+            name="quantity"
+            type="number"
+            label="Quantity"
+            validators={[VALIDATOR_REQUIRE()]}
+            onInput={inputHandler}
+            value={0}
+            errorText="Please enter quantity of ingredient."
+          />
+          <Input
+            element="input"
+            id="measurement"
+            name="measurement"
+            type="text"
+            label="Measurement"
+            validators={[]}
+            onInput={inputHandler}
+            value={""}
+          />
+          <Input
+            element="input"
+            id="ingredient"
+            name="ingredient"
+            type="text"
+            label="ingredient"
+            validators={[VALIDATOR_REQUIRE()]}
+            onInput={inputHandler}
+            value={""}
+            errorText="Please enter an ingredient."
+          />
+          <Button onClick={handleIngredientAdd}>Add Ingredient</Button>
+        </div>
         <Button type="submit" disabled={!formState.isValid}>
           Add Recipe
         </Button>

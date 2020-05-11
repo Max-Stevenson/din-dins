@@ -11,7 +11,7 @@ import Profile from "./profile/pages/UserProfile";
 import Recipes from "./recipes/pages/Recipes";
 import Recipe from "./recipes/pages/Recipe";
 import NewRecipe from "./recipes/pages/NewRecipe";
-import TestPage from "./TestPage";
+import TestPage from "./Test/TestPage";
 import "./App.css";
 
 const App = () => {

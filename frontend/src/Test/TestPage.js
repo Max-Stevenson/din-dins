@@ -1,5 +1,5 @@
 import React, { useState, useReducer } from "react";
-import Button from "./shared/components/FormElements/Button";
+import Button from "../shared/components/FormElements/Button";
 import "./TestPage.css";
 
 const reducer = (state, action) => {
@@ -55,18 +55,23 @@ const TestPage = () => {
           </li>
         ))}
       </ul>
+      <label htmlFor="ingredientQuantity">Quantity</label>
       <input
         type="number"
         id="ingredientQuantity"
+        label="Quantity"
         onChange={e => setQuantity(e.target.value)}
         value={quantity}
       />
+      <label htmlFor="ingredientMeasure">Measure</label>
       <input
         type="text"
         id="ingredientMeasure"
+        label="Measurement"
         onChange={e => setMeasure(e.target.value)}
         value={measure}
       />
+      <label htmlFor="ingredient">ingredient</label>
       <input
         type="text"
         id="ingredient"
