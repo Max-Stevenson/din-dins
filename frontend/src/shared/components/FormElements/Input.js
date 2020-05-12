@@ -56,6 +56,7 @@ const Input = props => {
         onBlur={touchHandler}
         value={inputState.value}
         name={props.name}
+        checked={props.checked}
       />
     ) : (
       <textarea

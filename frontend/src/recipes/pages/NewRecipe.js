@@ -48,8 +48,8 @@ const NewRecipe = () => {
         value: "",
         isValid: false
       },
-      mealType: {
-        value: "",
+      isVegetarian: {
+        value: false,
         isValid: false
       }
     },
@@ -106,18 +106,17 @@ const NewRecipe = () => {
         <div className="recipe-form__meal-type">
           <Input
             element="input"
-            id="mealType"
+            id="isVegetarian"
             name="mealType"
             type="radio"
             label="Vegetarian"
             validators={[]}
-            errorText="Please select meal type."
             onInput={inputHandler}
             value={true}
           />
           <Input
             element="input"
-            id="mealType"
+            id="isVegetarian"
             name="mealType"
             type="radio"
             label="Non-vegetarian"

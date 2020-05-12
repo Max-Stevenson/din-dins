@@ -19,7 +19,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "5eaecf2a95ab162c225464c5",
     title: "Chicken Dinner",
-    isVegetarian: false,
+    isVegetarian: true,
     __v: 0
   },
   {
@@ -89,9 +89,9 @@ const Recipe = () => {
             type="radio"
             label="Vegetarian"
             validators={[]}
-            errorText="Please select meal type."
             onInput={inputHandler}
             value={true}
+            checked={identifiedRecipe.isVegetarian}
           />
           <Input
             element="input"
@@ -102,6 +102,7 @@ const Recipe = () => {
             validators={[]}
             onInput={inputHandler}
             value={false}
+            checked={!identifiedRecipe.isVegetarian}
           />
         </div>
         <Tabs>
