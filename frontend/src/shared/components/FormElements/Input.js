@@ -4,9 +4,7 @@ import "./Input.css";
 
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE":
-    console.log("input" + action.val);
-    
+    case "CHANGE":    
       return {
         ...state,
         value: action.val,
@@ -22,7 +20,7 @@ const inputReducer = (state, action) => {
   }
 };
 
-const Input = props => {
+const Input = props => {  
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.value || "",
     isTouched: false,

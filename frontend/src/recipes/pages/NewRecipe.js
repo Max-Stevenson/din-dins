@@ -4,6 +4,7 @@ import Button from "../../shared/components/FormElements/Button";
 import "./NewRecipe.css";
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import Tabs from "../../shared/components/UIElements/Tabs";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -112,7 +113,7 @@ const NewRecipe = () => {
             label="Vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={"true"}
+            value="true"
           />
           <Input
             element="input"
@@ -122,70 +123,72 @@ const NewRecipe = () => {
             label="Non-vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={"false"}
+            value="false"
           />
         </div>
-        <div className="recipe-form__ingredients-list">
-          <h2>Ingredients</h2>
-          <ul>
-            {ingredients.length > 0 &&
-              ingredients.map((i, idx) => (
-                <li key={idx}>
-                  {i.ingredient.quantity} {i.ingredient.measure}{" "}
-                  {i.ingredient.item}
-                  <button
-                    onClick={e => {
-                      e.preventDefault();
-                      dispatch({ type: "REMOVE", i });
-                    }}
-                  >
-                    Remove
-                  </button>
-                </li>
+        <Tabs>
+          <div className="recipe-form__ingredients-list" label="Ingredients">
+            <h2>Ingredients</h2>
+            <ul>
+              {ingredients.length > 0 &&
+                ingredients.map((i, idx) => (
+                  <li key={idx}>
+                    {i.ingredient.quantity} {i.ingredient.measure}{" "}
+                    {i.ingredient.item}
+                    <button
+                      onClick={e => {
+                        e.preventDefault();
+                        dispatch({ type: "REMOVE", i });
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                ))}
+            </ul>
+            <label htmlFor="ingredientQuantity">Quantity</label>
+            <input
+              type="number"
+              id="ingredientQuantity"
+              label="Quantity"
+              onChange={e => setQuantity(e.target.value)}
+              value={quantity}
+            />
+            <label htmlFor="ingredientMeasure">Measure</label>
+            <input
+              type="text"
+              id="ingredientMeasure"
+              label="Measurement"
+              onChange={e => setMeasure(e.target.value)}
+              value={measure}
+            />
+            <label htmlFor="ingredient">ingredient</label>
+            <input
+              type="text"
+              id="ingredient"
+              onChange={e => setItem(e.target.value)}
+              value={item}
+            />
+            <Button onClick={handleAdd}>Add Ingredient</Button>
+          </div>
+          <div label="Method" className="recipe-form__method-list">
+            <h2>Method</h2>
+            <ol>
+              {method.map((m, idx) => (
+                <li key={idx}>{m.step}</li>
               ))}
-          </ul>
-          <label htmlFor="ingredientQuantity">Quantity</label>
-          <input
-            type="number"
-            id="ingredientQuantity"
-            label="Quantity"
-            onChange={e => setQuantity(e.target.value)}
-            value={quantity}
-          />
-          <label htmlFor="ingredientMeasure">Measure</label>
-          <input
-            type="text"
-            id="ingredientMeasure"
-            label="Measurement"
-            onChange={e => setMeasure(e.target.value)}
-            value={measure}
-          />
-          <label htmlFor="ingredient">ingredient</label>
-          <input
-            type="text"
-            id="ingredient"
-            onChange={e => setItem(e.target.value)}
-            value={item}
-          />
-          <Button onClick={handleAdd}>Add Ingredient</Button>
-        </div>
-        <div className="recipe-form__method-list">
-          <h2>Method</h2>
-          <ol>
-            {method.map((m, idx) => (
-              <li key={idx}>{m.step}</li>
-            ))}
-          </ol>
-        </div>
-        <div className="recipe-form__method-input">
-          <input
-            type="text"
-            id="method"
-            onChange={e => setMethodStep(e.target.value)}
-            value={methodStep}
-          />
-          <Button onClick={handleAddMethod}>Add Method Step</Button>
-        </div>
+            </ol>
+            <div className="recipe-form__method-input">
+              <input
+                type="text"
+                id="method"
+                onChange={e => setMethodStep(e.target.value)}
+                value={methodStep}
+              />
+              <Button onClick={handleAddMethod}>Add Method Step</Button>
+            </div>
+          </div>
+        </Tabs>
         <Button type="submit" disabled={!formState.isValid}>
           Add Recipe
         </Button>

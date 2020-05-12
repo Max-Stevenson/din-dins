@@ -19,7 +19,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "5eaecf2a95ab162c225464c5",
     title: "Chicken Dinner",
-    isVegetarian: "true",
+    isVegetarian: "false",
     __v: 0
   },
   {
@@ -45,7 +45,7 @@ const Recipe = () => {
     {
       title: { value: "", isValid: false },
       mealSize: { value: "", isValid: false },
-      isVegetarian: { value: false, isValid: false }
+      isVegetarian: { value: "false", isValid: false }
     },
     false
   );
@@ -110,32 +110,6 @@ const Recipe = () => {
           value={formState.inputs.mealSize.value}
           valid={formState.inputs.mealSize.isValid}
         />
-        <div className="recipe-form__meal-type">
-          <Input
-            element="input"
-            id="mealType"
-            name="mealType"
-            type="radio"
-            label="Vegetarian"
-            validators={[]}
-            onInput={inputHandler}
-            value={"true"}
-            checked={formState.inputs.isVegetarian.value === "true"}
-            valid={formState.inputs.isVegetarian.isValid}
-          />
-          <Input
-            element="input"
-            id="mealType"
-            name="mealType"
-            type="radio"
-            label="Non-vegetarian"
-            validators={[]}
-            onInput={inputHandler}
-            value={"false"}
-            checked={formState.inputs.isVegetarian.value !== "true"}
-            valid={formState.inputs.isVegetarian.isValid}
-          />
-        </div>
         <Tabs>
           <div label="Ingredients">
             <ul>
