@@ -81,12 +81,36 @@ const Recipe = () => {
           value={identifiedRecipe.mealSize}
           valid={true}
         />
+        <div className="recipe-form__meal-type">
+          <Input
+            element="input"
+            id="mealType"
+            name="mealType"
+            type="radio"
+            label="Vegetarian"
+            validators={[]}
+            errorText="Please select meal type."
+            onInput={inputHandler}
+            value={true}
+          />
+          <Input
+            element="input"
+            id="mealType"
+            name="mealType"
+            type="radio"
+            label="Non-vegetarian"
+            validators={[]}
+            onInput={inputHandler}
+            value={false}
+          />
+        </div>
         <Tabs>
           <div label="Ingredients">
             <ul>
               {identifiedRecipe.ingredients.map((ingredient, idx) => (
                 <li key={idx}>
-                  {ingredient.ingredient.quantity} {ingredient.ingredient.measure} {ingredient.ingredient.item}
+                  {ingredient.ingredient.quantity}{" "}
+                  {ingredient.ingredient.measure} {ingredient.ingredient.item}
                 </li>
               ))}
             </ul>
