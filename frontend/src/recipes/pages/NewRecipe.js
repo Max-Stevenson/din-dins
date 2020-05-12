@@ -49,7 +49,7 @@ const NewRecipe = () => {
         isValid: false
       },
       isVegetarian: {
-        value: false,
+        value: "false",
         isValid: false
       }
     },
@@ -112,7 +112,7 @@ const NewRecipe = () => {
             label="Vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={true}
+            value={"true"}
           />
           <Input
             element="input"
@@ -122,7 +122,7 @@ const NewRecipe = () => {
             label="Non-vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={false}
+            value={"false"}
           />
         </div>
         <div className="recipe-form__ingredients-list">

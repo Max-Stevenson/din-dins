@@ -13,7 +13,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "5eaecf2a95ab162c225464c5",
     title: "Chicken Dinner",
-    isVegetarian: false,
+    isVegetarian: "false",
     __v: 0
   },
   {
@@ -27,7 +27,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "7eaecf2a95ab162c225464a6",
     title: "Burgers",
-    isVegetarian: false,
+    isVegetarian: "false",
     __v: 0
   }
 ];

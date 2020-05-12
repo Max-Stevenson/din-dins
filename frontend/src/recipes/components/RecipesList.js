@@ -2,6 +2,7 @@ import React from "react";
 import "./RecipesList.css";
 import RecipesItem from "./RecipesItem";
 import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
 
 const RecipesList = props => {
   if (props.items.length === 0) {
@@ -9,6 +10,7 @@ const RecipesList = props => {
       <div className="center">
         <Card>
           <h2>No recipes found</h2>
+          <Button to="/recipes/new">Create Recipe</Button>
         </Card>
       </div>
     );

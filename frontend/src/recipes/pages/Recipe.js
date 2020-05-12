@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "../../shared/components/UIElements/Tabs";
 import Input from "../../shared/components/FormElements/Input";
@@ -19,7 +19,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "5eaecf2a95ab162c225464c5",
     title: "Chicken Dinner",
-    isVegetarian: true,
+    isVegetarian: "true",
     __v: 0
   },
   {
@@ -33,7 +33,7 @@ const testItems = [
     method: [{ step: "prehead oven" }, { step: "cook" }],
     id: "7eaecf2a95ab162c225464a6",
     title: "Burgers",
-    isVegetarian: false,
+    isVegetarian: "false",
     __v: 0
   }
 ];
@@ -41,12 +41,32 @@ const testItems = [
 const Recipe = () => {
   const recipeId = useParams().recipeId;
 
+  const [formState, inputHandler, setFormData] = useForm(
+    {
+      title: { value: "", isValid: false },
+      mealSize: { value: "", isValid: false },
+      isVegetarian: { value: false, isValid: false }
+    },
+    false
+  );
+
   const identifiedRecipe = testItems.find(p => p.id === recipeId);
 
-  const [formState, inputHandler] = useForm(
-    { title: { value: identifiedRecipe.title, isValid: true } },
-    true
-  );
+  useEffect(() => {
+    setFormData(
+      {
+        title: { value: identifiedRecipe.title, isValid: true },
+        mealSize: { value: identifiedRecipe.mealSize, isValid: true },
+        isVegetarian: { value: identifiedRecipe.isVegetarian, isValid: true }
+      },
+      true
+    );
+  }, [setFormData, identifiedRecipe]);
+
+  const recipeUpdateSubmitHandler = event => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
 
   if (!identifiedRecipe) {
     return (
@@ -55,6 +75,15 @@ const Recipe = () => {
       </div>
     );
   }
+
+  if (!formState.inputs.title.value) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2>Recipe Page</h2>
@@ -67,8 +96,8 @@ const Recipe = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter valid recipe title."
           onInput={inputHandler}
-          value={identifiedRecipe.title}
-          valid={true}
+          value={formState.inputs.title.value}
+          valid={formState.inputs.title.isValid}
         />
         <Input
           element="input"
@@ -78,8 +107,8 @@ const Recipe = () => {
           validators={[VALIDATOR_MIN(1)]}
           errorText="Please enter a valid meal size."
           onInput={inputHandler}
-          value={identifiedRecipe.mealSize}
-          valid={true}
+          value={formState.inputs.mealSize.value}
+          valid={formState.inputs.mealSize.isValid}
         />
         <div className="recipe-form__meal-type">
           <Input
@@ -90,8 +119,9 @@ const Recipe = () => {
             label="Vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={true}
-            checked={identifiedRecipe.isVegetarian}
+            value={"true"}
+            checked={formState.inputs.isVegetarian.value === "true"}
+            valid={formState.inputs.isVegetarian.isValid}
           />
           <Input
             element="input"
@@ -101,8 +131,9 @@ const Recipe = () => {
             label="Non-vegetarian"
             validators={[]}
             onInput={inputHandler}
-            value={false}
-            checked={!identifiedRecipe.isVegetarian}
+            value={"false"}
+            checked={formState.inputs.isVegetarian.value !== "true"}
+            valid={formState.inputs.isVegetarian.isValid}
           />
         </div>
         <Tabs>
@@ -124,7 +155,11 @@ const Recipe = () => {
             </ul>
           </div>
         </Tabs>
-        <Button type="submit" disabled={true}>
+        <Button
+          type="submit"
+          disabled={!formState.isValid}
+          onClick={recipeUpdateSubmitHandler}
+        >
           Update Recipe
         </Button>
       </form>

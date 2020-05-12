@@ -5,6 +5,8 @@ import "./Input.css";
 const inputReducer = (state, action) => {
   switch (action.type) {
     case "CHANGE":
+    console.log("input" + action.val);
+    
       return {
         ...state,
         value: action.val,
