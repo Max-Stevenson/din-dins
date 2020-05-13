@@ -19,14 +19,6 @@ const reducer = (state, action) => {
   }
 };
 
-const initialState = {
-  title: "",
-  mealSize: 1,
-  isVegetarian: "false",
-  ingredients: [],
-  method: []
-};
-
 const TestPage = () => {
   const [{ ingredients }, dispatch] = useReducer(reducer, { ingredients: [] });
   const [quantity, setQuantity] = useState(0);

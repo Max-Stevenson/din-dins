@@ -16,6 +16,10 @@ const RecipesItem = props => {
     setShowConfirmModal(false);
   };
 
+  const confirmDeleteHandler = () => {
+    console.log("derezzed");
+  };
+
   return (
     <React.Fragment>
       <Modal
@@ -24,7 +28,14 @@ const RecipesItem = props => {
         header={props.title}
         contentClass="recipe-item__modal-content"
         footerClass="recipe-item__modal-actions"
-        footer={<Button onClick={cancelDeleteHandler}>Cancel</Button>}
+        footer={
+          <React.Fragment>
+            <Button danger onClick={confirmDeleteHandler}>
+              Delete
+            </Button>
+            <Button onClick={cancelDeleteHandler}>Cancel</Button>
+          </React.Fragment>
+        }
       >
         <div className="recipe-item__delete-confirmation">
           <p>Are you sure you want to delete this recipe?</p>

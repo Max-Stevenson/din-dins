@@ -74,8 +74,6 @@ const Recipe = () => {
     ingredients: identifiedRecipe.ingredients,
     method: identifiedRecipe.method
   });
-  
-
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -99,7 +97,18 @@ const Recipe = () => {
 
   const recipeUpdateSubmitHandler = event => {
     event.preventDefault();
-    console.log(formState.inputs);
+    console.log({...formState.inputs, ingredients});
+  };
+
+  const handleAdd = e => {
+    e.preventDefault();
+    dispatch({
+      type: "ADD_ITEM",
+      ingredient: { quantity, measure, item }
+    });
+    setQuantity(0);
+    setMeasure("");
+    setItem("");
   };
 
   if (!identifiedRecipe) {
@@ -149,8 +158,8 @@ const Recipe = () => {
             <ul>
               {ingredients.map((i, idx) => (
                 <li key={idx}>
-                  {i.ingredient.quantity}{" "}
-                  {i.ingredient.measure} {i.ingredient.item}
+                  {i.ingredient.quantity} {i.ingredient.measure}{" "}
+                  {i.ingredient.item}
                   <button
                     onClick={e => {
                       e.preventDefault();
@@ -162,6 +171,30 @@ const Recipe = () => {
                 </li>
               ))}
             </ul>
+            <label htmlFor="ingredientQuantity">Quantity</label>
+            <input
+              type="number"
+              id="ingredientQuantity"
+              label="Quantity"
+              onChange={e => setQuantity(e.target.value)}
+              value={quantity}
+            />
+            <label htmlFor="ingredientMeasure">Measure</label>
+            <input
+              type="text"
+              id="ingredientMeasure"
+              label="Measurement"
+              onChange={e => setMeasure(e.target.value)}
+              value={measure}
+            />
+            <label htmlFor="ingredient">ingredient</label>
+            <input
+              type="text"
+              id="ingredient"
+              onChange={e => setItem(e.target.value)}
+              value={item}
+            />
+            <Button onClick={handleAdd}>Submit</Button>
           </div>
           <div label="Method">
             <ul>
