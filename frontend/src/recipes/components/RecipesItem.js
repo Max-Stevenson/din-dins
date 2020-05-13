@@ -17,6 +17,7 @@ const RecipesItem = props => {
   };
 
   const confirmDeleteHandler = () => {
+    setShowConfirmModal(false)
     console.log("derezzed");
   };
 

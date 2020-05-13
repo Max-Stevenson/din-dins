@@ -13,6 +13,7 @@ import Recipe from "./recipes/pages/Recipe";
 import NewRecipe from "./recipes/pages/NewRecipe";
 import TestPage from "./Test/TestPage";
 import "./App.css";
+import Auth from "./profile/pages/Auth";
 
 const App = () => {
   return (
@@ -34,6 +35,9 @@ const App = () => {
           </Route>
           <Route path="/test" exact={true}>
             <TestPage />
+          </Route>
+          <Route path="/login" exact={true}>
+            <Auth/>
           </Route>
           <Redirect to="/" />
         </Switch>
