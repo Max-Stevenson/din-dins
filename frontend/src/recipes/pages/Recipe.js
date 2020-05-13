@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import Tabs from "../../shared/components/UIElements/Tabs";
 import Input from "../../shared/components/FormElements/Input";
@@ -38,8 +38,44 @@ const testItems = [
   }
 ];
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_ITEM":
+      return {
+        ...state,
+        ingredients: [...state.ingredients, { ingredient: action.ingredient }]
+      };
+    case "REMOVE":
+      return {
+        ...state,
+        ingredients: state.ingredients.filter(si => {
+          return si.ingredient.item !== action.i.ingredient.item;
+        })
+      };
+    case "ADD_METHOD":
+      return {
+        ...state,
+        method: [...state.method, { step: action.methodStep }]
+      };
+    default:
+      return state;
+  }
+};
+
 const Recipe = () => {
   const recipeId = useParams().recipeId;
+  const identifiedRecipe = testItems.find(p => p.id === recipeId);
+
+  const [quantity, setQuantity] = useState(0);
+  const [measure, setMeasure] = useState("");
+  const [item, setItem] = useState("");
+
+  const [{ ingredients, method }, dispatch] = useReducer(reducer, {
+    ingredients: identifiedRecipe.ingredients,
+    method: identifiedRecipe.method
+  });
+  
+
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -49,8 +85,6 @@ const Recipe = () => {
     },
     false
   );
-
-  const identifiedRecipe = testItems.find(p => p.id === recipeId);
 
   useEffect(() => {
     setFormData(
@@ -113,10 +147,18 @@ const Recipe = () => {
         <Tabs>
           <div label="Ingredients">
             <ul>
-              {identifiedRecipe.ingredients.map((ingredient, idx) => (
+              {ingredients.map((i, idx) => (
                 <li key={idx}>
-                  {ingredient.ingredient.quantity}{" "}
-                  {ingredient.ingredient.measure} {ingredient.ingredient.item}
+                  {i.ingredient.quantity}{" "}
+                  {i.ingredient.measure} {i.ingredient.item}
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch({ type: "REMOVE", i });
+                    }}
+                  >
+                    Remove
+                  </button>
                 </li>
               ))}
             </ul>

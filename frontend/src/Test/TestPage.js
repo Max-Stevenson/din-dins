@@ -19,6 +19,14 @@ const reducer = (state, action) => {
   }
 };
 
+const initialState = {
+  title: "",
+  mealSize: 1,
+  isVegetarian: "false",
+  ingredients: [],
+  method: []
+};
+
 const TestPage = () => {
   const [{ ingredients }, dispatch] = useReducer(reducer, { ingredients: [] });
   const [quantity, setQuantity] = useState(0);
@@ -36,9 +44,13 @@ const TestPage = () => {
     setItem("");
   };
 
+  const handleInput = e => {};
+
   return (
     <React.Fragment>
       <h2>Test Page</h2>
+      <label htmlFor="title">Recipe Title</label>
+      <input type="text" id="title" onChange={handleInput} />
       <h2>Current Ingredients</h2>
       <ul>
         {ingredients.map((i, idx) => (
