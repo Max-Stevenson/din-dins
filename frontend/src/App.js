@@ -18,12 +18,50 @@ import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const login = useCallback(() => {
     setIsLoggedIn(true);
   }, []);
+
   const logout = useCallback(() => {
     setIsLoggedIn(false);
   }, []);
+
+  let routes;
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/profile" exact={true}>
+          <Profile />
+        </Route>
+        <Route path="/recipes" exact={true}>
+          <Recipes />
+        </Route>
+        <Route path="/recipes/new" exact={true}>
+          <NewRecipe />
+        </Route>
+        <Route path="/recipes/:recipeId" exact={true}>
+          <Recipe />
+        </Route>
+        <Route path="/test" exact={true}>
+          <TestPage />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/recipes" exact={true}>
+          <Recipes />
+        </Route>
+        <Route path="/login" exact={true}>
+          <Auth />
+        </Route>
+        <Redirect to="/login" />
+      </Switch>
+    );
+  }
 
   return (
     <AuthContext.Provider
@@ -31,29 +69,7 @@ const App = () => {
     >
       <Router>
         <Header />
-        <main>
-          <Switch>
-            <Route path="/profile" exact={true}>
-              <Profile />
-            </Route>
-            <Route path="/recipes" exact={true}>
-              <Recipes />
-            </Route>
-            <Route path="/recipes/new" exact={true}>
-              <NewRecipe />
-            </Route>
-            <Route path="/recipes/:recipeId" exact={true}>
-              <Recipe />
-            </Route>
-            <Route path="/test" exact={true}>
-              <TestPage />
-            </Route>
-            <Route path="/login" exact={true}>
-              <Auth />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </main>
+        <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
   );
