@@ -14,12 +14,21 @@ const NavLinks = props => {
       <li>
         <NavLink to="/mealplanner">Mealplanner</NavLink>
       </li>
-      {auth.isLoggedIn && <li>
-        <NavLink to="/profile">Profile</NavLink>
-      </li>}
-      {!auth.isLoggedIn && <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/profile">Profile</NavLink>
+        </li>
+      )}
+      {!auth.isLoggedIn && (
+        <li>
+          <NavLink to="/login">Login</NavLink>
+        </li>
+      )}
+      {auth.isLoggedIn && (
+        <li>
+          <button onClick={auth.logout}>Logout</button>
+        </li>
+      )}
     </ul>
   );
 };
