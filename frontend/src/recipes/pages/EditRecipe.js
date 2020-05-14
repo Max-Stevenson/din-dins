@@ -4,7 +4,7 @@ import Tabs from "../../shared/components/UIElements/Tabs";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from "../../shared/util/validators";
-import "./Recipe.css";
+import "./EditRecipe.css";
 import { useForm } from "../../shared/hooks/form-hook";
 
 const testItems = [

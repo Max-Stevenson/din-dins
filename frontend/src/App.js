@@ -9,8 +9,9 @@ import {
 import Header from "./shared/components/Navigation/Header";
 import Profile from "./profile/pages/UserProfile";
 import Recipes from "./recipes/pages/Recipes";
-import Recipe from "./recipes/pages/Recipe";
+import EditRecipe from "./recipes/pages/EditRecipe";
 import NewRecipe from "./recipes/pages/NewRecipe";
+import ViewRecipe from "./recipes/pages/ViewRecipe";
 import TestPage from "./Test/TestPage";
 import "./App.css";
 import Auth from "./profile/pages/Auth";
@@ -40,8 +41,11 @@ const App = () => {
         <Route path="/recipes/new" exact={true}>
           <NewRecipe />
         </Route>
-        <Route path="/recipes/:recipeId" exact={true}>
-          <Recipe />
+        <Route path="/recipes/edit/:recipeId" exact={true}>
+          <EditRecipe />
+        </Route>
+        <Route path="/recipes/view/:recipeId" exact={true}>
+          <ViewRecipe />
         </Route>
         <Route path="/test" exact={true}>
           <TestPage />
@@ -54,6 +58,9 @@ const App = () => {
       <Switch>
         <Route path="/recipes" exact={true}>
           <Recipes />
+        </Route>
+        <Route path="/recipes/view/:recipeId" exact={true}>
+          <ViewRecipe />
         </Route>
         <Route path="/login" exact={true}>
           <Auth />

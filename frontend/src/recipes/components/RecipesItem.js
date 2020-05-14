@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FaLeaf, FaDrumstickBite, FaUtensils } from "react-icons/fa";
 import "./RecipesItem.css";
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const RecipesItem = props => {
+  const auth = useContext(AuthContext);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const showDeleteWarningHandler = () => {
@@ -17,7 +19,7 @@ const RecipesItem = props => {
   };
 
   const confirmDeleteHandler = () => {
-    setShowConfirmModal(false)
+    setShowConfirmModal(false);
     console.log("derezzed");
   };
 
@@ -72,8 +74,15 @@ const RecipesItem = props => {
             </div>
           </div>
           <div className="recipe-item__actions">
-            <Button to={`/recipes/${props.id}`}>Edit Recipe</Button>
-            <Button onClick={showDeleteWarningHandler}>Delete Recipe</Button>
+          <Button to={`/recipes/view/${props.id}`}>View Recipe</Button>
+            {auth.isLoggedIn && (
+              <React.Fragment>
+                <Button to={`/recipes/edit/${props.id}`}>Edit Recipe</Button>
+                <Button onClick={showDeleteWarningHandler}>
+                  Delete Recipe
+                </Button>
+              </React.Fragment>
+            )}
           </div>
         </Card>
       </li>
