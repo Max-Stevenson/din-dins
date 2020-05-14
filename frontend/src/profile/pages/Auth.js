@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Auth.css";
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
@@ -8,8 +8,10 @@ import {
   VALIDATOR_REQUIRE
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const Auth = () => {
+  const auth = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
       email: { value: "", isValid: false },
@@ -21,6 +23,7 @@ const Auth = () => {
   const authSubmitHandler = event => {
     event.preventDefault();
     console.log(formState.inputs);
+    auth.login();
   };
 
   return (
@@ -45,7 +48,11 @@ const Auth = () => {
           errorText="Please enter your password."
           onInput={inputHandler}
         />
-        <Button type="submit" onClick={authSubmitHandler} disabled={!formState.isValid}>
+        <Button
+          type="submit"
+          onClick={authSubmitHandler}
+          disabled={!formState.isValid}
+        >
           Login
         </Button>
       </form>
