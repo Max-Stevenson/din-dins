@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.css";
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
@@ -9,9 +9,13 @@ import {
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const [formState, inputHandler] = useForm(
     {
       email: { value: "", isValid: false },
@@ -22,7 +26,9 @@ const Auth = () => {
 
   const authSubmitHandler = async event => {
     event.preventDefault();
+
     try {
+      setIsLoading(true);
       const response = await fetch("http://localhost:3000/api/v1/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -33,15 +39,18 @@ const Auth = () => {
       });
       const responseData = await response.json();
       console.log(responseData);
+      setIsLoading(false);
+      auth.login();
     } catch (err) {
+      setIsLoading(false);
+      setError(err.message || "Something went wrong, please try again.");
       console.log(err);
     }
-
-    auth.login();
   };
 
   return (
     <Card class="authentication">
+    {isLoading && <LoadingSpinner asOverlay={true}/>}
       <h2>Login Required</h2>
       <form>
         <Input
