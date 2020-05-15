@@ -7,16 +7,21 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const express = require("express");
 const port = process.env.PORT || 3000;
+const HttpError = require("./models/http-error");
 
 const recipesRoutes = require("./routes/recipe-routes");
 const userRoutes = require("./routes/user-routes");
 
 const app = express();
-// body parser to read json form data and store as js object
 app.use(bodyParser.json());
 
 app.use("/api/v1/recipes", recipesRoutes);
 app.use("/api/v1/users", userRoutes);
+
+app.use((req, res, next) => {
+  throw new HttpError("Could not find this route.", 404);
+});
+
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, err => {
