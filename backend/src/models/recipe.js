@@ -17,7 +17,7 @@ const recipeSchema = new Schema({
     ],
     required: true
   },
-  method: { type: [String], required: true }
+  method: { type: [{ step: { type: String, required: true } }], required: true }
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);
