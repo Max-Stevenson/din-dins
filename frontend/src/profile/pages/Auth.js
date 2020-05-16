@@ -11,11 +11,11 @@ import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const Auth = () => {
   const auth = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { error, clearError, isLoading, sendRequest } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       email: { value: "", isValid: false },
@@ -28,38 +28,24 @@ const Auth = () => {
     event.preventDefault();
 
     try {
-      setIsLoading(true);
-      const response = await fetch("http://localhost:3000/api/v1/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await sendRequest(
+        "http://localhost:3000/api/v1/users/login",
+        "POST",
+        JSON.stringify({
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
-        })
-      });
-
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-      
-      console.log(responseData);
-      setIsLoading(false);
+        }),
+        {
+          "Content-Type": "application/json"
+        }
+      );
       auth.login();
-    } catch (err) {
-      setIsLoading(false);
-      setError(err.message || "Something went wrong, please try again.");
-      console.log(err);
-    }
-  };
-
-  const errorHandler = () => {
-    setError(null);
+    } catch (error) {}
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={errorHandler}/>
+      <ErrorModal error={error} onClear={clearError} />
       <Card class="authentication">
         {isLoading && <LoadingSpinner asOverlay={true} />}
         <h2>Login Required</h2>
