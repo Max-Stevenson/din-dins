@@ -10,9 +10,11 @@ const recipeSchema = new Schema({
   ingredients: {
     type: [
       {
-        quantity: { type: Number, required: true },
-        measure: { type: String },
-        item: { type: String, required: true }
+        ingredient: {
+          quantity: { type: Number, required: true },
+          measure: { type: String },
+          item: { type: String, required: true }
+        }
       }
     ],
     required: true

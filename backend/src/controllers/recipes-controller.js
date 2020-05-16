@@ -5,15 +5,21 @@ const { validationResult } = require("express-validator");
 exports.createRecipe = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log(errors);
+    
     return next(
       new HttpError("Invalid input passed, please check your data.", 422)
     );
   }
 
   const recipe = new Recipe(req.body);
+  console.log(req.body);
+  
   try {
     await recipe.save();
   } catch (err) {
+    console.log(err);
+    
     return next(
       new HttpError("Could not create recipe, please try again.", 500)
     );

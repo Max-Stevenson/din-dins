@@ -4,6 +4,9 @@ import Button from "../../shared/components/FormElements/Button";
 import "./NewRecipe.css";
 import { VALIDATOR_REQUIRE, VALIDATOR_MIN } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Tabs from "../../shared/components/UIElements/Tabs";
 
 const reducer = (state, action) => {
@@ -31,6 +34,7 @@ const reducer = (state, action) => {
 };
 
 const NewRecipe = () => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [{ ingredients, method }, dispatch] = useReducer(reducer, {
     ingredients: [],
     method: []
@@ -77,15 +81,34 @@ const NewRecipe = () => {
     setMethodStep("");
   };
 
-  const recipeSubmitHandler = event => {
+  const recipeSubmitHandler = async event => {
     event.preventDefault();
-    console.log({ ...formState.inputs, ingredients, method });
+    console.log(ingredients);
+    try {
+      await sendRequest(
+        "http://localhost:3000/api/v1/recipes",
+        "POST",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          mealSize: formState.inputs.mealSize.value,
+          isVegetarian: formState.inputs.isVegetarian.value,
+          ingredients: ingredients,
+          method: method
+        }),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+    } catch (err) {}
   };
 
   return (
     <React.Fragment>
+    
       <h2>New Recipe Page</h2>
+      <ErrorModal error={error} onClear={clearError} />
       <form className="recipe-form" onSubmit={recipeSubmitHandler}>
+        {isLoading && <LoadingSpinner asOverlay={true}/>}
         <Input
           element="input"
           id="title"
