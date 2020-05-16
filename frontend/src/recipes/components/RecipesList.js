@@ -20,8 +20,8 @@ const RecipesList = props => {
     <ul className="recipes-list">
       {props.recipes.map(recipe => (
         <RecipesItem
-          key={recipe.id}
-          id={recipe.id}
+          key={recipe._id}
+          id={recipe._id}
           title={recipe.title}
           isVegeterian={recipe.isVegeterian}
           mealSize={recipe.mealSize}
