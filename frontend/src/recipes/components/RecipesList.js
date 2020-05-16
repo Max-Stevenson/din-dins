@@ -5,7 +5,7 @@ import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 
 const RecipesList = props => {
-  if (props.items.length === 0) {
+  if (props.recipes.length === 0) {
     return (
       <div className="center">
         <Card>
@@ -18,7 +18,7 @@ const RecipesList = props => {
 
   return (
     <ul className="recipes-list">
-      {props.items.map(recipe => (
+      {props.recipes.map(recipe => (
         <RecipesItem
           key={recipe.id}
           id={recipe.id}

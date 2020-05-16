@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
-  image: { data: Buffer, content: String },
+  image: { type: String },
   title: { type: String, trim: true, required: true },
   isVegetarian: { type: String, required: true },
   mealSize: { type: Number, default: 1 },

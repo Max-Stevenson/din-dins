@@ -31,7 +31,7 @@ exports.getAllRecipes = async (req, res, next) => {
       new HttpError("Could not get recipes, please try again.", 500)
     );
   }
-  res.status(200).send({ recipes });
+  res.status(200).send( {recipes} );
 };
 
 exports.getSingleRecipe = async (req, res, next) => {
@@ -93,6 +93,8 @@ exports.editRecipe = async (req, res, next) => {
   try {
     await recipe.save();
   } catch (err) {
+    console.log(err);
+    
     return next(
       new HttpError("Could not edit recipe, please try again.", 500)
     );
