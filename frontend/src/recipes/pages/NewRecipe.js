@@ -1,4 +1,5 @@
 import React, { useState, useReducer } from "react";
+import { useHistory } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import "./NewRecipe.css";
@@ -61,6 +62,8 @@ const NewRecipe = () => {
     false
   );
 
+  const history = useHistory();
+
   const handleAdd = e => {
     e.preventDefault();
     dispatch({
@@ -83,7 +86,6 @@ const NewRecipe = () => {
 
   const recipeSubmitHandler = async event => {
     event.preventDefault();
-    console.log(ingredients);
     try {
       await sendRequest(
         "http://localhost:3000/api/v1/recipes",
@@ -99,16 +101,16 @@ const NewRecipe = () => {
           "Content-Type": "application/json"
         }
       );
+      history.push('/recipes');
     } catch (err) {}
   };
 
   return (
     <React.Fragment>
-    
       <h2>New Recipe Page</h2>
       <ErrorModal error={error} onClear={clearError} />
       <form className="recipe-form" onSubmit={recipeSubmitHandler}>
-        {isLoading && <LoadingSpinner asOverlay={true}/>}
+        {isLoading && <LoadingSpinner asOverlay={true} />}
         <Input
           element="input"
           id="title"
