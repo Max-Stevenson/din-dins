@@ -33,9 +33,19 @@ const ViewRecipe = () => {
         </div>
       )}
       {!isLoading && identifiedRecipe && (
-        <div>
-          <h2>{identifiedRecipe.title}</h2>
-          <h3>Meal size: {identifiedRecipe.mealSize}</h3>
+        <div className="identified-recipe__container">
+          <h2 className="identified-recipe__header">
+            {identifiedRecipe.title}
+          </h2>
+          <div className="identified-recipe__image-container">
+            <img
+              className="identified-recipe__image"
+              src={identifiedRecipe.image}
+            />
+          </div>
+          <h3 className="identified-recipe__header">
+            Meal size: {identifiedRecipe.mealSize}
+          </h3>
           <Tabs>
             <div label="Ingredients">
               <ul>
