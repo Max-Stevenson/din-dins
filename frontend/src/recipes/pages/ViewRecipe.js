@@ -44,23 +44,23 @@ const ViewRecipe = () => {
               src={identifiedRecipe.image}
             />
           </div>
-          <div>
-            <div>
+          <div className="identified-recipe__info-container">
+            <div className="identified-recipe__meal-type">
             {identifiedRecipe.isVegetarian === true ? (
-              <span className="recipe-item__logo-container">
-                <FaLeaf className="recipe-item__logo" />
+              <span className="identified-recipe__logo-container">
+                <FaLeaf className="identified-recipe__logo" />
                 Vegetarian
               </span>
             ) : (
-              <span className="recipe-item__logo-container">
-                <FaDrumstickBite className="recipe-item__logo" />
+              <span className="identified-recipe__logo-container">
+                <FaDrumstickBite className="identified-recipe__logo" />
                 Non-Vegetarian
               </span>
             )}
             </div>
-            <div className="recipe-item__info-container">
-              <span className="recipe-item__logo-container">
-                <FaUtensils className="recipe-item__logo" />
+            <div className="identified-recipe__info-container">
+              <span className="identified-recipe__logo-container">
+                <FaUtensils className="identified-recipe__logo" />
                 {identifiedRecipe.mealSize} {identifiedRecipe.mealSize > 1 ? "nights" : "night"}
               </span>
             </div>

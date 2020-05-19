@@ -13,3 +13,23 @@
 .identified-recipe__header {
   text-align: center;
 }
+
+.identified-recipe_meal-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.identified-recipe__logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.identified-recipe__info-container {
+  padding: 10px;
+}
+
+.identified-recipe__logo {
+  width: 32px;
+  height: 32px;
+}
