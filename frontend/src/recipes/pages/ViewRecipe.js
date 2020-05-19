@@ -48,9 +48,9 @@ const ViewRecipe = () => {
           </h3>
           <Tabs>
             <div label="Ingredients">
-              <ul>
+              <ul className="identified-recipe__ingredients-list">
                 {identifiedRecipe.ingredients.map((i, idx) => (
-                  <li key={idx}>
+                  <li className="identified-recipe__ingredient" key={idx}>
                     {i.ingredient.quantity} {i.ingredient.measure}{" "}
                     {i.ingredient.item}
                   </li>
@@ -58,11 +58,13 @@ const ViewRecipe = () => {
               </ul>
             </div>
             <div label="Method">
-              <ul>
+              <ol className="identified-recipe__method-list">
                 {identifiedRecipe.method.map((step, idx) => (
-                  <li key={idx}>{step.step}</li>
+                  <li className="identified-recipe__method" key={idx}>
+                    {step.step}
+                  </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           </Tabs>
         </div>
