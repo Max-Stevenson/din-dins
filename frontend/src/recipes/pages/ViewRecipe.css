@@ -1,0 +1,15 @@
+.identified-recipe__image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.identified-recipe__image {
+  max-width: 90%;
+  border-radius: 5%;
+  padding: 1px;
+  border: 1px solid #021a40;
+}
+
+.identified-recipe__header {
+  text-align: center;
+}

@@ -62,14 +62,14 @@ const RecipesItem = props => {
               ) : (
                 <span className="recipe-item__logo-container">
                   <FaDrumstickBite className="recipe-item__logo" />
-                  Meat
+                  Non-Vegetarian
                 </span>
               )}
             </div>
             <div className="recipe-item__info-container">
               <span className="recipe-item__logo-container">
                 <FaUtensils className="recipe-item__logo" />
-                {props.mealSize}
+                {props.mealSize} {props.mealSize > 1 ? "nights" : "night"}
               </span>
             </div>
           </div>

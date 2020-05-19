@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaLeaf, FaDrumstickBite, FaUtensils } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
@@ -43,9 +44,27 @@ const ViewRecipe = () => {
               src={identifiedRecipe.image}
             />
           </div>
-          <h3 className="identified-recipe__header">
-            Meal size: {identifiedRecipe.mealSize}
-          </h3>
+          <div>
+            <div>
+            {identifiedRecipe.isVegetarian === true ? (
+              <span className="recipe-item__logo-container">
+                <FaLeaf className="recipe-item__logo" />
+                Vegetarian
+              </span>
+            ) : (
+              <span className="recipe-item__logo-container">
+                <FaDrumstickBite className="recipe-item__logo" />
+                Non-Vegetarian
+              </span>
+            )}
+            </div>
+            <div className="recipe-item__info-container">
+              <span className="recipe-item__logo-container">
+                <FaUtensils className="recipe-item__logo" />
+                {identifiedRecipe.mealSize} {identifiedRecipe.mealSize > 1 ? "nights" : "night"}
+              </span>
+            </div>
+          </div>
           <Tabs>
             <div label="Ingredients">
               <ul className="identified-recipe__ingredients-list">
