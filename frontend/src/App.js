@@ -48,9 +48,6 @@ const App = () => {
         <Route path="/recipes/view/:recipeId" exact={true}>
           <ViewRecipe />
         </Route>
-        <Route path="/test" exact={true}>
-          <TestPage />
-        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -67,7 +64,10 @@ const App = () => {
           <Auth />
         </Route>
         <Route path="/mealplanner" exact={true}>
-          <ViewCalendar/>
+          <ViewCalendar />
+        </Route>
+        <Route path="/test" exact={true}>
+          <TestPage />
         </Route>
         <Redirect to="/login" />
       </Switch>

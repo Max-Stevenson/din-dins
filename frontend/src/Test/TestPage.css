@@ -1,16 +1,19 @@
-.recipe-form {
-  position: relative;
-  list-style: none;
-  margin: 0 auto;
-  padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 6px;
-  background: white;
+.root-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.recipe-form__meal-type {
+.day-container {
+  border: 2px black solid;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+  width: 112px;
+  height: 112px;
+}
+
+.day-container:hover {
+  cursor: pointer;
 }
