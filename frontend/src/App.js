@@ -16,6 +16,7 @@ import TestPage from "./Test/TestPage";
 import "./App.css";
 import Auth from "./profile/pages/Auth";
 import { AuthContext } from "./shared/context/auth-context";
+import ViewCalendar from "./meal_plan/pages/ViewCalendar";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,6 +65,9 @@ const App = () => {
         </Route>
         <Route path="/login" exact={true}>
           <Auth />
+        </Route>
+        <Route path="/mealplanner" exact={true}>
+          <ViewCalendar/>
         </Route>
         <Redirect to="/login" />
       </Switch>
