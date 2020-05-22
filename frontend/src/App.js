@@ -60,6 +60,9 @@ const App = () => {
         <Route path="/recipes/view/:recipeId" exact={true}>
           <ViewRecipe />
         </Route>
+        <Route path="/recipes/edit/:recipeId" exact={true}>
+          <EditRecipe />
+        </Route>
         <Route path="/login" exact={true}>
           <Auth />
         </Route>

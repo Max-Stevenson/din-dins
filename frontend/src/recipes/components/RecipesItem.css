@@ -1,3 +1,7 @@
+.recipe-item {
+  max-width: 33%;
+}
+
 .recipe-item__header {
   text-align: center;
   margin: 0 0 5px 0;
@@ -9,7 +13,7 @@
 
 .recipe-item__meal-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
 }
 
