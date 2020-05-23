@@ -1,5 +1,5 @@
-import React, { useState, useReducer, useEffect } from "react";
-import { format, formatDistance, formatRelative, addDays } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { format, addDays } from "date-fns";
 import Button from "../shared/components/FormElements/Button";
 import "./TestPage.css";
 import Modal from "../shared/components/UIElements/Modal";
@@ -105,7 +105,8 @@ const TestPage = () => {
 
   useEffect(() => {
     console.log(nextDay);
-  }, []);
+  }, [nextDay]);
+
   return (
     <div>
       <h2>TestPage</h2>

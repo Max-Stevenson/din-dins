@@ -42,6 +42,7 @@ const ViewRecipe = () => {
             <img
               className="identified-recipe__image"
               src={identifiedRecipe.image}
+              alt={identifiedRecipe.title}
             />
           </div>
           <div className="identified-recipe__info-container">
