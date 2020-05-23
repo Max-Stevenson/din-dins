@@ -53,13 +53,15 @@ const Recipe = () => {
         const responseData = await sendRequest(
           `http://localhost:3000/api/v1/recipes/${recipeId}`
         );
+        console.log(responseData);
+        
         setLoadedRecipe(responseData.recipe);
         setFormData(
           {
-            title: { value: responseData.title.value, isValid: true },
-            mealSize: { value: responseData.mealSize.value, isValid: true },
+            title: { value: responseData.recipe.title.value, isValid: true },
+            mealSize: { value: responseData.recipe.mealSize.value, isValid: true },
             isVegetarian: {
-              value: responseData.isVegetarian.value,
+              value: responseData.recipe.isVegetarian.value,
               isValid: true
             }
           },
@@ -126,8 +128,8 @@ const Recipe = () => {
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter valid recipe title."
               onInput={inputHandler}
-              value={formState.inputs.title.value}
-              valid={formState.inputs.title.isValid}
+              value={loadedRecipe.title}
+              valid={true}
             />
             <Input
               element="input"
@@ -137,8 +139,8 @@ const Recipe = () => {
               validators={[VALIDATOR_MIN(1)]}
               errorText="Please enter a valid meal size."
               onInput={inputHandler}
-              value={formState.inputs.mealSize.value}
-              valid={formState.inputs.mealSize.isValid}
+              value={loadedRecipe.mealSize}
+              valid={true}
             />
             <Tabs>
               <div label="Ingredients">
