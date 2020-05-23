@@ -10,41 +10,19 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Tabs from "../../shared/components/UIElements/Tabs";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_ITEM":
-      return {
-        ...state,
-        ingredients: [...state.ingredients, { ingredient: action.ingredient }]
-      };
-    case "REMOVE":
-      return {
-        ...state,
-        ingredients: state.ingredients.filter(si => {
-          return si.ingredient.item !== action.i.ingredient.item;
-        })
-      };
-    case "ADD_METHOD":
-      return {
-        ...state,
-        method: [...state.method, { step: action.methodStep }]
-      };
-    default:
-      return state;
-  }
-};
-
 const NewRecipe = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [{ ingredients, method }, dispatch] = useReducer(reducer, {
-    ingredients: [],
-    method: []
-  });
   const [methodStep, setMethodStep] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("");
   const [item, setItem] = useState("");
-  const [formState, inputHandler] = useForm(
+  const [
+    formState,
+    inputHandler,
+    setFormData,
+    ingredientInputHandler,
+    ingredientRemoveHandler
+  ] = useForm(
     {
       title: {
         value: "",
@@ -57,32 +35,42 @@ const NewRecipe = () => {
       isVegetarian: {
         value: "false",
         isValid: false
-      }
+      },
+      ingredients: [
+        {
+          ingredient: {
+            quantity: 1,
+            measure: "",
+            item: "whole chicken"
+          }
+        }
+      ],
+      method: []
     },
     false
   );
 
   const history = useHistory();
 
-  const handleAdd = e => {
-    e.preventDefault();
-    dispatch({
-      type: "ADD_ITEM",
-      ingredient: { quantity, measure, item }
-    });
+  const addIngredient = event => {
+    event.preventDefault();
+
+    let ing = { ingredient: { quantity, measure, item } };
+    console.log("before");
+    ingredientInputHandler(ing);
+    console.log("after");
     setQuantity(0);
     setMeasure("");
     setItem("");
   };
 
-  const handleAddMethod = e => {
-    e.preventDefault();
-    dispatch({
-      type: "ADD_METHOD",
-      methodStep
-    });
-    setMethodStep("");
+  const removeIngredient = ingredient => {
+    ingredientRemoveHandler(ingredient);
   };
+
+  const addMethodStep = () => {};
+
+  const removeMethodStep = () => {};
 
   const recipeSubmitHandler = async event => {
     event.preventDefault();
@@ -94,14 +82,14 @@ const NewRecipe = () => {
           title: formState.inputs.title.value,
           mealSize: formState.inputs.mealSize.value,
           isVegetarian: formState.inputs.isVegetarian.value,
-          ingredients: ingredients,
-          method: method
+          ingredients: formState.inputs.ingredients,
+          method: formState.inputs.method
         }),
         {
           "Content-Type": "application/json"
         }
       );
-      history.push('/recipes');
+      history.push("/recipes");
     } catch (err) {}
   };
 
@@ -155,15 +143,14 @@ const NewRecipe = () => {
           <div className="recipe-form__ingredients-list" label="Ingredients">
             <h2>Ingredients</h2>
             <ul>
-              {ingredients.length > 0 &&
-                ingredients.map((i, idx) => (
+              {formState.inputs.ingredients &&
+                formState.inputs.ingredients.map((i, idx) => (
                   <li key={idx}>
                     {i.ingredient.quantity} {i.ingredient.measure}{" "}
                     {i.ingredient.item}
                     <button
-                      onClick={e => {
-                        e.preventDefault();
-                        dispatch({ type: "REMOVE", i });
+                      onClick={() => {
+                        removeIngredient(i.ingredient);
                       }}
                     >
                       Remove
@@ -194,14 +181,15 @@ const NewRecipe = () => {
               onChange={e => setItem(e.target.value)}
               value={item}
             />
-            <Button onClick={handleAdd}>Add Ingredient</Button>
+            <Button onClick={addIngredient}>Add Ingredient</Button>
           </div>
           <div label="Method" className="recipe-form__method-list">
             <h2>Method</h2>
             <ol>
-              {method.map((m, idx) => (
-                <li key={idx}>{m.step}</li>
-              ))}
+              {formState.inputs.method &&
+                formState.inputs.method.map((m, idx) => (
+                  <li key={idx}>{m.step}</li>
+                ))}
             </ol>
             <div className="recipe-form__method-input">
               <input
@@ -210,7 +198,7 @@ const NewRecipe = () => {
                 onChange={e => setMethodStep(e.target.value)}
                 value={methodStep}
               />
-              <Button onClick={handleAddMethod}>Add Method Step</Button>
+              <Button onClick={addMethodStep}>Add Method Step</Button>
             </div>
           </div>
         </Tabs>
