@@ -3,8 +3,6 @@ import { useCallback, useReducer } from "react";
 const formReducer = (state, action) => {
   switch (action.type) {
     case "INPUT_CHANGE": {
-      console.log("s");
-
       let formIsValid = true;
       for (let inputId in state.inputs) {
         if (inputId === action.inputId) {
@@ -29,7 +27,6 @@ const formReducer = (state, action) => {
       };
     }
     case "ADD_INGREDIENT": {
-      console.log("made it");
       return {
         ...state,
         inputs: {
@@ -40,12 +37,17 @@ const formReducer = (state, action) => {
     }
 
     case "REMOVE_INGREDIENT": {
+      console.log("made it remove");
       return {
         ...state,
         inputs: {
           ...state.inputs,
-          ingredients: state.ingredients.filter(si => {
-            return si.ingredient.item !== action.ingredient.item;
+          ingredients: state.inputs.ingredients.filter(si => {
+            console.log(action.ingredient);
+            
+            console.log(si.ingredient);
+
+            return si.item !== action.ingredient.item;
           })
         }
       };
@@ -74,14 +76,15 @@ export const useForm = (initialInputs, initialFormValidity) => {
     [dispatch]
   );
 
-  const ingredientInputHandler = ingredient => {
-    console.log("in handler");
-
-    dispatch({
-      type: "ADD_INGREDIENT",
-      ingredient: ingredient
-    });
-  };
+  const ingredientInputHandler = useCallback(
+    ingredient => {
+      dispatch({
+        type: "ADD_INGREDIENT",
+        ingredient: ingredient
+      });
+    },
+    [dispatch]
+  );
 
   const ingredientRemoveHandler = useCallback(
     ingredient => {

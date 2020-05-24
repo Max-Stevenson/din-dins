@@ -36,15 +36,7 @@ const NewRecipe = () => {
         value: "false",
         isValid: false
       },
-      ingredients: [
-        {
-          ingredient: {
-            quantity: 1,
-            measure: "",
-            item: "whole chicken"
-          }
-        }
-      ],
+      ingredients: [],
       method: []
     },
     false
@@ -56,16 +48,16 @@ const NewRecipe = () => {
     event.preventDefault();
 
     let ing = { ingredient: { quantity, measure, item } };
-    console.log("before");
     ingredientInputHandler(ing);
-    console.log("after");
     setQuantity(0);
     setMeasure("");
     setItem("");
   };
 
   const removeIngredient = ingredient => {
-    ingredientRemoveHandler(ingredient);
+    console.log({ ingredient: ingredient });
+
+    ingredientRemoveHandler({ ingredient: ingredient });
   };
 
   const addMethodStep = () => {};
@@ -73,6 +65,8 @@ const NewRecipe = () => {
   const removeMethodStep = () => {};
 
   const recipeSubmitHandler = async event => {
+    console.log("sending req");
+
     event.preventDefault();
     try {
       await sendRequest(
@@ -149,7 +143,8 @@ const NewRecipe = () => {
                     {i.ingredient.quantity} {i.ingredient.measure}{" "}
                     {i.ingredient.item}
                     <button
-                      onClick={() => {
+                      onClick={event => {
+                        event.preventDefault();
                         removeIngredient(i.ingredient);
                       }}
                     >
