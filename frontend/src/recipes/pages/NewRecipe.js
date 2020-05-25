@@ -49,7 +49,7 @@ const NewRecipe = () => {
   const addIngredient = event => {
     event.preventDefault();
 
-    let ing = { ingredient: { quantity, measure, item } };
+    let ing = { ingredient: { quantity, measure, item }};
     ingredientInputHandler(ing);
     setQuantity(0);
     setMeasure("");

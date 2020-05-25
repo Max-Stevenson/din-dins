@@ -32,8 +32,9 @@ const formReducer = (state, action) => {
         inputs: {
           ...state.inputs,
           ingredients: [...state.inputs.ingredients, action.ingredient]
-        }
-      };
+        },
+        isValid: {...state.isValid}
+      }
     }
     case "REMOVE_INGREDIENT": {
       return {
@@ -43,7 +44,8 @@ const formReducer = (state, action) => {
           ingredients: state.inputs.ingredients.filter(si => {
             return si.item !== action.ingredient.item;
           })
-        }
+        },
+        isValid: {...state.isValid}
       };
     }
     case "ADD_METHOD": {
@@ -52,7 +54,8 @@ const formReducer = (state, action) => {
         inputs: {
           ...state.inputs,
           method: [...state.inputs.method, action.methodStep]
-        }
+        },
+        isValid: {...state.isValid}
       };
     }
     case "REMOVE_METHOD": {
@@ -63,7 +66,8 @@ const formReducer = (state, action) => {
           method: state.inputs.method.filter(sm => {
             return sm.step !== action.methodStep.step;
           })
-        }
+        },
+        isValid: {...state.isValid}
       };
     }
     default: {
