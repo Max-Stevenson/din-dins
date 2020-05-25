@@ -35,19 +35,33 @@ const formReducer = (state, action) => {
         }
       };
     }
-
     case "REMOVE_INGREDIENT": {
-      console.log("made it remove");
       return {
         ...state,
         inputs: {
           ...state.inputs,
           ingredients: state.inputs.ingredients.filter(si => {
-            console.log(action.ingredient);
-            
-            console.log(si.ingredient);
-
             return si.item !== action.ingredient.item;
+          })
+        }
+      };
+    }
+    case "ADD_METHOD": {
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          method: [...state.inputs.method, action.methodStep]
+        }
+      };
+    }
+    case "REMOVE_METHOD": {
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          method: state.inputs.method.filter(sm => {
+            return sm.step !== action.methodStep.step;
           })
         }
       };
@@ -93,6 +107,23 @@ export const useForm = (initialInputs, initialFormValidity) => {
     [dispatch]
   );
 
+  const methodInputHandler = useCallback(
+    
+    
+    methodStep => {
+      console.log("here");
+      dispatch({ type: "ADD_METHOD", methodStep });
+    },
+    [dispatch]
+  );
+
+  const methodRemoveHandler = useCallback(
+    methodStep => {
+      dispatch({ type: "REMOVE_METHOD", step: methodStep });
+    },
+    [dispatch]
+  );
+
   const setFormData = useCallback((inputData, formValidity) => {
     dispatch({
       type: "SET_DATA",
@@ -106,6 +137,8 @@ export const useForm = (initialInputs, initialFormValidity) => {
     inputHandler,
     setFormData,
     ingredientInputHandler,
-    ingredientRemoveHandler
+    ingredientRemoveHandler,
+    methodInputHandler,
+    methodRemoveHandler
   ];
 };

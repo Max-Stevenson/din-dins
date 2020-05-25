@@ -21,7 +21,9 @@ const NewRecipe = () => {
     inputHandler,
     setFormData,
     ingredientInputHandler,
-    ingredientRemoveHandler
+    ingredientRemoveHandler,
+    methodInputHandler,
+    methodRemoveHandler
   ] = useForm(
     {
       title: {
@@ -55,18 +57,22 @@ const NewRecipe = () => {
   };
 
   const removeIngredient = ingredient => {
-    console.log({ ingredient: ingredient });
-
     ingredientRemoveHandler({ ingredient: ingredient });
   };
 
-  const addMethodStep = () => {};
+  const addMethodStep = (event) => {
+    event.preventDefault();
+
+    let step = {step: methodStep};
+    console.log(step);
+    
+    methodInputHandler(step);
+    setMethodStep("");
+  };
 
   const removeMethodStep = () => {};
 
   const recipeSubmitHandler = async event => {
-    console.log("sending req");
-
     event.preventDefault();
     try {
       await sendRequest(
