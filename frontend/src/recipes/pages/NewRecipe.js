@@ -60,17 +60,18 @@ const NewRecipe = () => {
     ingredientRemoveHandler({ ingredient: ingredient });
   };
 
-  const addMethodStep = (event) => {
+  const addMethodStep = event => {
     event.preventDefault();
 
-    let step = {step: methodStep};
-    console.log(step);
-    
+    let step = { step: methodStep };
+
     methodInputHandler(step);
     setMethodStep("");
   };
 
-  const removeMethodStep = () => {};
+  const removeMethodStep = (methodStep) => {
+    methodRemoveHandler(methodStep);
+  };
 
   const recipeSubmitHandler = async event => {
     event.preventDefault();
@@ -189,7 +190,17 @@ const NewRecipe = () => {
             <ol>
               {formState.inputs.method &&
                 formState.inputs.method.map((m, idx) => (
-                  <li key={idx}>{m.step}</li>
+                  <li key={idx}>
+                    {m.step}
+                    <button
+                      onClick={event => {
+                        event.preventDefault();
+                        removeMethodStep(m);
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </li>
                 ))}
             </ol>
             <div className="recipe-form__method-input">

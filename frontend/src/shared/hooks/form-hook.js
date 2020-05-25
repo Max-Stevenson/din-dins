@@ -119,7 +119,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
 
   const methodRemoveHandler = useCallback(
     methodStep => {
-      dispatch({ type: "REMOVE_METHOD", step: methodStep });
+      dispatch({ type: "REMOVE_METHOD", methodStep });
     },
     [dispatch]
   );
