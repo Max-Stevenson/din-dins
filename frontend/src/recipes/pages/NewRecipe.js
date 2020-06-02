@@ -38,8 +38,8 @@ const NewRecipe = () => {
         value: "false",
         isValid: false
       },
-      ingredients: [],
-      method: []
+      ingredients: { value: [], isValid: false },
+      method: { value: [], isValid: false }
     },
     false
   );
@@ -49,7 +49,7 @@ const NewRecipe = () => {
   const addIngredient = event => {
     event.preventDefault();
 
-    let ing = { ingredient: { quantity, measure, item }};
+    let ing = { ingredient: { quantity, measure, item } };
     ingredientInputHandler(ing);
     setQuantity(0);
     setMeasure("");
@@ -57,6 +57,8 @@ const NewRecipe = () => {
   };
 
   const removeIngredient = ingredient => {
+    console.log(ingredient);
+
     ingredientRemoveHandler({ ingredient: ingredient });
   };
 
@@ -69,7 +71,7 @@ const NewRecipe = () => {
     setMethodStep("");
   };
 
-  const removeMethodStep = (methodStep) => {
+  const removeMethodStep = methodStep => {
     methodRemoveHandler(methodStep);
   };
 
@@ -83,8 +85,8 @@ const NewRecipe = () => {
           title: formState.inputs.title.value,
           mealSize: formState.inputs.mealSize.value,
           isVegetarian: formState.inputs.isVegetarian.value,
-          ingredients: formState.inputs.ingredients,
-          method: formState.inputs.method
+          ingredients: formState.inputs.ingredients.value,
+          method: formState.inputs.method.value
         }),
         {
           "Content-Type": "application/json"
@@ -145,7 +147,7 @@ const NewRecipe = () => {
             <h2>Ingredients</h2>
             <ul>
               {formState.inputs.ingredients &&
-                formState.inputs.ingredients.map((i, idx) => (
+                formState.inputs.ingredients.value.map((i, idx) => (
                   <li key={idx}>
                     {i.ingredient.quantity} {i.ingredient.measure}{" "}
                     {i.ingredient.item}
@@ -189,7 +191,7 @@ const NewRecipe = () => {
             <h2>Method</h2>
             <ol>
               {formState.inputs.method &&
-                formState.inputs.method.map((m, idx) => (
+                formState.inputs.method.value.map((m, idx) => (
                   <li key={idx}>
                     {m.step}
                     <button

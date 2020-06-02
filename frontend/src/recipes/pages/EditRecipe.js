@@ -40,14 +40,14 @@ const Recipe = () => {
         value: "false",
         isValid: false
       },
-      ingredients: [],
-      method: []
+      ingredients: { value: [], isValid: false },
+      method: { value: [], isValid: false }
     },
-    false
+    true
   );
 
   const history = useHistory();
-  
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -55,18 +55,24 @@ const Recipe = () => {
           `http://localhost:3000/api/v1/recipes/${recipeId}`
         );
         console.log(responseData);
-        
+
         setLoadedRecipe(responseData.recipe);
         setFormData(
           {
-            title: { value: responseData.recipe.title.value, isValid: true },
-            mealSize: { value: responseData.recipe.mealSize.value, isValid: true },
-            isVegetarian: {
-              value: responseData.recipe.isVegetarian.value,
+            title: { value: responseData.recipe.title, isValid: true },
+            mealSize: {
+              value: responseData.recipe.mealSize,
               isValid: true
             },
-            ingredients: {value: responseData.recipe.ingredients.value, isValid: true},
-            method: {value: responseData.recipe.method.value, isValid: true}
+            isVegetarian: {
+              value: responseData.recipe.isVegetarian,
+              isValid: true
+            },
+            ingredients: {
+              value: responseData.recipe.ingredients,
+              isValid: true
+            },
+            method: { value: responseData.recipe.method, isValid: true }
           },
           true
         );
@@ -75,22 +81,68 @@ const Recipe = () => {
     fetchRecipe();
   }, [sendRequest, recipeId, setFormData]);
 
-  const recipeUpdateSubmitHandler = event => {
+  const recipeUpdateSubmitHandler = async event => {
     event.preventDefault();
+    try {
+      await sendRequest(
+        `http://localhost:3000/api/v1/recipes/${recipeId}`,
+        "PATCH",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          mealSize: formState.inputs.mealSize.value,
+          isVegetarian: formState.inputs.isVegetarian.value,
+          ingredients: formState.inputs.ingredients,
+          method: formState.inputs.method
+        }),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+      history.push("/recipes");
+    } catch (err) {}
   };
 
-  if (!loadedRecipe && !error) {
-    return (
-      <div className="center">
-        <h2>Could not find recipe!</h2>
-      </div>
-    );
-  }
+  const addIngredient = event => {
+    event.preventDefault();
+
+    let ing = { ingredient: { quantity, measure, item } };
+    ingredientInputHandler(ing);
+    setQuantity(0);
+    setMeasure("");
+    setItem("");
+  };
+
+  const removeIngredient = ingredient => {
+    console.log(ingredient);
+
+    ingredientRemoveHandler({ ingredient: ingredient });
+  };
+
+  const addMethodStep = event => {
+    event.preventDefault();
+
+    let step = { step: methodStep };
+
+    methodInputHandler(step);
+    setMethodStep("");
+  };
+
+  const removeMethodStep = methodStep => {
+    methodRemoveHandler(methodStep);
+  };
 
   if (isLoading) {
     return (
       <div className="center">
         <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!loadedRecipe && !error) {
+    return (
+      <div className="center">
+        <h2>Could not find recipe!</h2>
       </div>
     );
   }
@@ -132,8 +184,9 @@ const Recipe = () => {
                       {i.ingredient.quantity} {i.ingredient.measure}{" "}
                       {i.ingredient.item}
                       <button
-                        onClick={e => {
-                          e.preventDefault();
+                        onClick={event => {
+                          event.preventDefault();
+                          removeIngredient(i.ingredient);
                         }}
                       >
                         Remove
@@ -164,14 +217,33 @@ const Recipe = () => {
                   onChange={e => setItem(e.target.value)}
                   value={item}
                 />
-                <Button onClick={() => {}}>Submit</Button>
+                <Button onClick={addIngredient}>Add Ingredient</Button>
               </div>
               <div label="Method">
-                <ul>
+                <ol>
                   {loadedRecipe.method.map((step, idx) => (
-                    <li key={idx}>{step.step}</li>
+                    <li key={idx}>
+                      {step.step}
+                      <button
+                        onClick={event => {
+                          event.preventDefault();
+                          removeMethodStep(step);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </li>
                   ))}
-                </ul>
+                </ol>
+                <div className="recipe-form__method-input">
+                  <input
+                    type="text"
+                    id="method"
+                    onChange={e => setMethodStep(e.target.value)}
+                    value={methodStep}
+                  />
+                  <Button onClick={addMethodStep}>Add Method Step</Button>
+                </div>
               </div>
             </Tabs>
             <Button

@@ -21,6 +21,8 @@ const formReducer = (state, action) => {
       };
     }
     case "SET_DATA": {
+      console.log(action.inputs);
+      
       return {
         inputs: action.inputs,
         isValid: action.formIsValid
@@ -31,17 +33,17 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          ingredients: [...state.inputs.ingredients, action.ingredient]
+          ingredients: {value: [...state.inputs.ingredients.value, action.ingredient], isValid: true}
         },
         isValid: {...state.isValid}
       }
     }
-    case "REMOVE_INGREDIENT": {
+    case "REMOVE_INGREDIENT": {      
       return {
         ...state,
         inputs: {
           ...state.inputs,
-          ingredients: state.inputs.ingredients.filter(si => {
+          ingredients: state.inputs.ingredients.value.filter(si => {
             return si.item !== action.ingredient.item;
           })
         },
@@ -53,7 +55,7 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          method: [...state.inputs.method, action.methodStep]
+          method: [...state.inputs.method.value, action.methodStep]
         },
         isValid: {...state.isValid}
       };
@@ -63,7 +65,7 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          method: state.inputs.method.filter(sm => {
+          method: state.inputs.method.value.filter(sm => {
             return sm.step !== action.methodStep.step;
           })
         },
