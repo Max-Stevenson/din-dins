@@ -20,9 +20,7 @@ const formReducer = (state, action) => {
         isValid: formIsValid
       };
     }
-    case "SET_DATA": {
-      console.log(action.inputs);
-      
+    case "SET_DATA": {      
       return {
         inputs: action.inputs,
         isValid: action.formIsValid
@@ -43,19 +41,20 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          ingredients: state.inputs.ingredients.value.filter(si => {
-            return si.item !== action.ingredient.item;
-          })
+          ingredients: {
+            value: state.inputs.ingredients.value.filter(si => si.item !== action.ingredient.item),
+            isValid: true
+          }
         },
         isValid: {...state.isValid}
-      };
+      }
     }
     case "ADD_METHOD": {
       return {
         ...state,
         inputs: {
           ...state.inputs,
-          method: [...state.inputs.method.value, action.methodStep]
+          method: { value: [...state.inputs.method.value, action.methodStep], isValid: true }
         },
         isValid: {...state.isValid}
       };
@@ -65,9 +64,10 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          method: state.inputs.method.value.filter(sm => {
-            return sm.step !== action.methodStep.step;
-          })
+          method: {
+            value: state.inputs.method.value.filter(sm => sm.step !== action.methodStep.step),
+            isValid: true
+          }
         },
         isValid: {...state.isValid}
       };
