@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import Tabs from "../../shared/components/UIElements/Tabs";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -10,43 +10,44 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./EditRecipe.css";
 import { useForm } from "../../shared/hooks/form-hook";
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_ITEM":
-      return {
-        ...state,
-        ingredients: [...state.ingredients, { ingredient: action.ingredient }]
-      };
-    case "REMOVE":
-      return {
-        ...state,
-        ingredients: state.ingredients.filter(si => {
-          return si.ingredient.item !== action.i.ingredient.item;
-        })
-      };
-    case "ADD_METHOD":
-      return {
-        ...state,
-        method: [...state.method, { step: action.methodStep }]
-      };
-    default:
-      return state;
-  }
-};
-
 const Recipe = () => {
-  const [formState, inputHandler, setFormData] = useForm(
+  const recipeId = useParams().recipeId;
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [methodStep, setMethodStep] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [measure, setMeasure] = useState("");
+  const [item, setItem] = useState("");
+  const [loadedRecipe, setLoadedRecipe] = useState();
+  const [
+    formState,
+    inputHandler,
+    setFormData,
+    ingredientInputHandler,
+    ingredientRemoveHandler,
+    methodInputHandler,
+    methodRemoveHandler
+  ] = useForm(
     {
-      title: { value: "", isValid: false },
-      mealSize: { value: "", isValid: false },
-      isVegetarian: { value: "false", isValid: false }
+      title: {
+        value: "",
+        isValid: false
+      },
+      mealSize: {
+        value: "",
+        isValid: false
+      },
+      isVegetarian: {
+        value: "false",
+        isValid: false
+      },
+      ingredients: [],
+      method: []
     },
     false
   );
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [loadedRecipe, setLoadedRecipe] = useState();
-  const recipeId = useParams().recipeId;
 
+  const history = useHistory();
+  
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -63,7 +64,9 @@ const Recipe = () => {
             isVegetarian: {
               value: responseData.recipe.isVegetarian.value,
               isValid: true
-            }
+            },
+            ingredients: {value: responseData.recipe.ingredients.value, isValid: true},
+            method: {value: responseData.recipe.method.value, isValid: true}
           },
           true
         );
@@ -72,29 +75,8 @@ const Recipe = () => {
     fetchRecipe();
   }, [sendRequest, recipeId, setFormData]);
 
-  const [quantity, setQuantity] = useState(0);
-  const [measure, setMeasure] = useState("");
-  const [item, setItem] = useState("");
-
-  const [{ ingredients, method }, dispatch] = useReducer(reducer, {
-    ingredients: loadedRecipe.ingredients,
-    method: loadedRecipe.method
-  });
-
   const recipeUpdateSubmitHandler = event => {
     event.preventDefault();
-    console.log({ ...formState.inputs, ingredients });
-  };
-
-  const handleAdd = e => {
-    e.preventDefault();
-    dispatch({
-      type: "ADD_ITEM",
-      ingredient: { quantity, measure, item }
-    });
-    setQuantity(0);
-    setMeasure("");
-    setItem("");
   };
 
   if (!loadedRecipe && !error) {
@@ -145,14 +127,13 @@ const Recipe = () => {
             <Tabs>
               <div label="Ingredients">
                 <ul>
-                  {ingredients.map((i, idx) => (
+                  {loadedRecipe.ingredients.map((i, idx) => (
                     <li key={idx}>
                       {i.ingredient.quantity} {i.ingredient.measure}{" "}
                       {i.ingredient.item}
                       <button
                         onClick={e => {
                           e.preventDefault();
-                          dispatch({ type: "REMOVE", i });
                         }}
                       >
                         Remove
@@ -183,7 +164,7 @@ const Recipe = () => {
                   onChange={e => setItem(e.target.value)}
                   value={item}
                 />
-                <Button onClick={handleAdd}>Submit</Button>
+                <Button onClick={() => {}}>Submit</Button>
               </div>
               <div label="Method">
                 <ul>

@@ -115,7 +115,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
     
     
     methodStep => {
-      console.log("here");
       dispatch({ type: "ADD_METHOD", methodStep });
     },
     [dispatch]
