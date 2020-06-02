@@ -57,9 +57,7 @@ const NewRecipe = () => {
   };
 
   const removeIngredient = ingredient => {
-    console.log(ingredient);
-
-    ingredientRemoveHandler({ ingredient: ingredient });
+    ingredientRemoveHandler(ingredient);
   };
 
   const addMethodStep = event => {

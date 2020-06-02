@@ -20,7 +20,7 @@ const formReducer = (state, action) => {
         isValid: formIsValid
       };
     }
-    case "SET_DATA": {      
+    case "SET_DATA": {
       return {
         inputs: action.inputs,
         isValid: action.formIsValid
@@ -31,32 +31,45 @@ const formReducer = (state, action) => {
         ...state,
         inputs: {
           ...state.inputs,
-          ingredients: {value: [...state.inputs.ingredients.value, action.ingredient], isValid: true}
+          ingredients: {
+            value: [...state.inputs.ingredients.value, action.ingredient],
+            isValid: true
+          }
         },
-        isValid: {...state.isValid}
-      }
+        isValid: { ...state.isValid }
+      };
     }
-    case "REMOVE_INGREDIENT": {      
+    case "REMOVE_INGREDIENT": {
+      let filteredIngredients = state.inputs.ingredients.value.filter(si => {
+        console.log(si);
+        console.log(action);
+        
+        
+        return si.ingredient.item !== action.ingredient.item;
+      });
       return {
         ...state,
         inputs: {
           ...state.inputs,
           ingredients: {
-            value: state.inputs.ingredients.value.filter(si => si.item !== action.ingredient.item),
+            value: filteredIngredients,
             isValid: true
           }
         },
-        isValid: {...state.isValid}
-      }
+        isValid: { ...state.isValid }
+      };
     }
     case "ADD_METHOD": {
       return {
         ...state,
         inputs: {
           ...state.inputs,
-          method: { value: [...state.inputs.method.value, action.methodStep], isValid: true }
+          method: {
+            value: [...state.inputs.method.value, action.methodStep],
+            isValid: true
+          }
         },
-        isValid: {...state.isValid}
+        isValid: { ...state.isValid }
       };
     }
     case "REMOVE_METHOD": {
@@ -65,11 +78,13 @@ const formReducer = (state, action) => {
         inputs: {
           ...state.inputs,
           method: {
-            value: state.inputs.method.value.filter(sm => sm.step !== action.methodStep.step),
+            value: state.inputs.method.value.filter(
+              sm => sm.step !== action.methodStep.step
+            ),
             isValid: true
           }
         },
-        isValid: {...state.isValid}
+        isValid: { ...state.isValid }
       };
     }
     default: {
@@ -114,8 +129,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
   );
 
   const methodInputHandler = useCallback(
-    
-    
     methodStep => {
       dispatch({ type: "ADD_METHOD", methodStep });
     },

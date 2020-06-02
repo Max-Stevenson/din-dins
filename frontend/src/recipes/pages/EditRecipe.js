@@ -17,6 +17,7 @@ const Recipe = () => {
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("");
   const [item, setItem] = useState("");
+  const [updatedIngredients, setUpdatedIngredients] = useState([]);
   const [loadedRecipe, setLoadedRecipe] = useState();
   const [
     formState,
@@ -54,9 +55,8 @@ const Recipe = () => {
         const responseData = await sendRequest(
           `http://localhost:3000/api/v1/recipes/${recipeId}`
         );
-        console.log(responseData);
-
         setLoadedRecipe(responseData.recipe);
+        setUpdatedIngredients(responseData.recipe.ingredients);
         setFormData(
           {
             title: { value: responseData.recipe.title, isValid: true },
@@ -83,23 +83,25 @@ const Recipe = () => {
 
   const recipeUpdateSubmitHandler = async event => {
     event.preventDefault();
-    try {
-      await sendRequest(
-        `http://localhost:3000/api/v1/recipes/${recipeId}`,
-        "PATCH",
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          mealSize: formState.inputs.mealSize.value,
-          isVegetarian: formState.inputs.isVegetarian.value,
-          ingredients: formState.inputs.ingredients,
-          method: formState.inputs.method
-        }),
-        {
-          "Content-Type": "application/json"
-        }
-      );
-      history.push("/recipes");
-    } catch (err) {}
+    console.log(formState);
+
+    // try {
+    //   await sendRequest(
+    //     `http://localhost:3000/api/v1/recipes/${recipeId}`,
+    //     "PATCH",
+    //     JSON.stringify({
+    //       title: formState.inputs.title.value,
+    //       mealSize: formState.inputs.mealSize.value,
+    //       isVegetarian: formState.inputs.isVegetarian.value,
+    //       ingredients: formState.inputs.ingredients,
+    //       method: formState.inputs.method
+    //     }),
+    //     {
+    //       "Content-Type": "application/json"
+    //     }
+    //   );
+    //   history.push("/recipes");
+    // } catch (err) {}
   };
 
   const addIngredient = event => {
@@ -110,12 +112,20 @@ const Recipe = () => {
     setQuantity(0);
     setMeasure("");
     setItem("");
+    setUpdatedIngredients([
+      ...updatedIngredients,
+      { ingredient: { quantity, measure, item } }
+    ]);
   };
 
   const removeIngredient = ingredient => {
-    console.log(ingredient);
+    ingredientRemoveHandler(ingredient);
 
-    ingredientRemoveHandler({ ingredient: ingredient });
+    let filteredIngredients = updatedIngredients.filter(i => {
+      return i.ingredient.item !== ingredient.item;
+    });
+
+    setUpdatedIngredients(filteredIngredients);
   };
 
   const addMethodStep = event => {
@@ -179,7 +189,7 @@ const Recipe = () => {
             <Tabs>
               <div label="Ingredients">
                 <ul>
-                  {loadedRecipe.ingredients.map((i, idx) => (
+                  {updatedIngredients.map((i, idx) => (
                     <li key={idx}>
                       {i.ingredient.quantity} {i.ingredient.measure}{" "}
                       {i.ingredient.item}
