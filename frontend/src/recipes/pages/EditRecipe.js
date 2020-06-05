@@ -18,6 +18,7 @@ const Recipe = () => {
   const [measure, setMeasure] = useState("");
   const [item, setItem] = useState("");
   const [updatedIngredients, setUpdatedIngredients] = useState([]);
+  const [updatedMethod, setUpdatedMethod] = useState([]);
   const [loadedRecipe, setLoadedRecipe] = useState();
   const [
     formState,
@@ -57,6 +58,7 @@ const Recipe = () => {
         );
         setLoadedRecipe(responseData.recipe);
         setUpdatedIngredients(responseData.recipe.ingredients);
+        setUpdatedMethod(responseData.recipe.method)
         setFormData(
           {
             title: { value: responseData.recipe.title, isValid: true },
@@ -134,11 +136,21 @@ const Recipe = () => {
     let step = { step: methodStep };
 
     methodInputHandler(step);
+    setUpdatedMethod([
+      ...updatedMethod,
+      { step: methodStep }
+    ]);
     setMethodStep("");
   };
 
-  const removeMethodStep = methodStep => {
+  const removeMethodStep = methodStep => { 
     methodRemoveHandler(methodStep);
+
+    let filteredMethod = updatedMethod.filter(m => {
+      return m.step !== methodStep.step;
+    });
+
+    setUpdatedMethod(filteredMethod);
   };
 
   if (isLoading) {
@@ -231,7 +243,7 @@ const Recipe = () => {
               </div>
               <div label="Method">
                 <ol>
-                  {loadedRecipe.method.map((step, idx) => (
+                  {updatedMethod.map((step, idx) => (
                     <li key={idx}>
                       {step.step}
                       <button

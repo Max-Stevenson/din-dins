@@ -40,11 +40,7 @@ const formReducer = (state, action) => {
       };
     }
     case "REMOVE_INGREDIENT": {
-      let filteredIngredients = state.inputs.ingredients.value.filter(si => {
-        console.log(si);
-        console.log(action);
-        
-        
+      let filteredIngredients = state.inputs.ingredients.value.filter(si => {  
         return si.ingredient.item !== action.ingredient.item;
       });
       return {
