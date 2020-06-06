@@ -85,8 +85,6 @@ const Recipe = () => {
 
   const recipeUpdateSubmitHandler = async event => {
     event.preventDefault();
-    console.log(formState);
-    
     try {
       await sendRequest(
         `http://localhost:3000/api/v1/recipes/${recipeId}`,

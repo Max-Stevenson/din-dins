@@ -50,7 +50,7 @@ const RecipesItem = props => {
             <h2>{props.title}</h2>
           </div>
           <div className="recipe-item__image">
-            <img src={props.image} alt={props.title} />
+            <img src={props.image || "https://www.inspiremymeal.com/assets/images/recipe-card-placeholder.jpg"} alt={props.title} />
           </div>
           <div className="recipe-item__meal-info">
             <div className="recipe-item__info-container">
